@@ -13,5 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
         int x=2;
         //hello maxime
+        int y;
+        y=x-3;
     }
 }
