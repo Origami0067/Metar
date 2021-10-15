@@ -45,16 +45,25 @@ public class MainActivity extends AppCompatActivity {
                 final StringBuilder builder = new StringBuilder();
 
                 try{
-                    Document doc = Jsoup.connect("https://streamani.net/").get();
+                    Document doc = Jsoup.connect("https://www.aviationweather.gov/metar/data?ids=LFPG&format=decoded&hours=0&taf=on&layout=off").get();
                     String title = doc.title();
+
+                    Elements metaElems = doc.select("meta");
                     Elements links = doc.select("a[href]");
+                    Elements tableRows = doc.select("table.versions > tbody > tr");
+
 
                     builder.append(title).append("\n");
+                    for (Element tableRow : tableRows ) {
+                        builder.append("\n");
+                    }
+
+                    /*builder.append(title).append("\n");
 
                     for (Element link : links) {
                         builder.append("\n").append("Link : ").append(link.attr("href"))
                                 .append("\n").append("Text : ").append(link.text());
-                    }
+                    }*/
                 }
                 catch (IOException e) {
                     e.printStackTrace();
