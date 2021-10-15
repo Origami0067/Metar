@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         getBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                getSiteWeb();
             }
         });
     }
@@ -45,8 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 final StringBuilder builder = new StringBuilder();
 
                 try{
-                    Document doc = Jsoup.connect("http://www.ssaurel.com/blog" +
-                            "t=off").get();
+                    Document doc = Jsoup.connect("https://streamani.net/").get();
                     String title = doc.title();
                     Elements links = doc.select("a[href]");
 
