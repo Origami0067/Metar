@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -21,16 +22,17 @@ public class MainActivity extends AppCompatActivity {
 
     private Button getBtn;
     private TextView resultat;
-    private String codeOACI;
+    private EditText codeOACI;
+    private String code;
 
 
-    private String uriBuilder() {
+    private String uriBuilder(String code) {
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("https")
                 .authority("www.aviationweather.gov")
                 .appendPath("metar")
                 .appendPath("data")
-                .appendQueryParameter("ids","LFPG")
+                .appendQueryParameter("ids",code)
                 .appendQueryParameter("format", "decoded")
                 .appendQueryParameter("date","")
                 .appendQueryParameter("hours", "0")
@@ -46,7 +48,10 @@ public class MainActivity extends AppCompatActivity {
 
         //get instances of the Button and the TextView from our layout
         resultat = (TextView)findViewById(R.id.resultat);
+        codeOACI = (EditText)findViewById(R.id.codeOACI);
         getBtn = (Button)findViewById(R.id.getBtn);
+
+
 
         //set a click listener on the Button to start the download of the website when the user will click it
         getBtn.setOnClickListener(new View.OnClickListener() {
@@ -63,15 +68,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 final StringBuilder builder = new StringBuilder();
+                code = String.valueOf(codeOACI.getText());
 
                 try{
-                    String url = uriBuilder();
+                    String url = uriBuilder(code);
                     System.out.println(url);
                     Document doc = Jsoup.connect(url).get();
                     String title = doc.title();
 
-                    Elements metaElems = doc.select("meta");
-                    Elements links = doc.select("a[href]");
                     Elements trs = doc.select("table tr");
 
                     String text="";
