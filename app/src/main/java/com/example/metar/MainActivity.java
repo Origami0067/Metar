@@ -2,6 +2,7 @@ package com.example.metar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,10 +15,29 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
+import okhttp3.OkHttpClient;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button getBtn;
     private TextView resultat;
+    private String codeOACI;
+
+
+    private String uriBuilder() {
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https")
+                .authority("www.aviationweather.gov")
+                .appendPath("metar")
+                .appendPath("data")
+                .appendQueryParameter("ids","LFPG")
+                .appendQueryParameter("format", "decoded")
+                .appendQueryParameter("date","")
+                .appendQueryParameter("hours", "0")
+                .appendQueryParameter("taf", "on");
+        String myUrl = builder.build().toString();
+        return myUrl;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +65,9 @@ public class MainActivity extends AppCompatActivity {
                 final StringBuilder builder = new StringBuilder();
 
                 try{
-                    Document doc = Jsoup.connect("https://www.aviationweather.gov/metar/data?ids=LFPG&format=decoded&hours=0&taf=on&layout=off").get();
+                    String url = uriBuilder();
+                    System.out.println(url);
+                    Document doc = Jsoup.connect("https://www.aviationweather.gov/metar/data?ids=KATL&format=decoded&date=&hours=0&taf=on").get();
                     String title = doc.title();
 
                     Elements metaElems = doc.select("meta");
