@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+<ScrollView android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="16dp"
-    tools:context=".MainActivity">
+    android:fillViewport="true"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Button
-        android:id="@+id/getBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="voir les données"
-        android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"/>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="16dp"
+        tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/resultat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Resultat"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
-        android:layout_below="@id/getBtn"
-        android:textSize="17sp"/>
+        <Button
+            android:id="@+id/getBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="voir les données"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"/>
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/resultat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resultat"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:layout_below="@id/getBtn"
+            android:textSize="17sp"/>
+
+    </RelativeLayout>
+
+
+</ScrollView>
