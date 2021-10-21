@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Metar</string>
+    <string name="btnShow">Show data</string>
 </resources>
