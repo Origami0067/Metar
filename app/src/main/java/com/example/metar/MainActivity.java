@@ -52,11 +52,14 @@ public class MainActivity extends AppCompatActivity {
                     Elements links = doc.select("a[href]");
                     Elements trs = doc.select("table tr");
 
+                    String text="";
 
-                    builder.append(title).append("\n");
-                    for (Element tableRow : tableRows ) {
-                        builder.append("\n");
+                    for (Element tr : trs) {
+                        Elements tds = tr.getElementsByTag("td");
+                        //Element td = tds.first();
+                        text+=tds.text()+"\n";
                     }
+                    builder.append(text);
 
                     /*builder.append(title).append("\n");
 
