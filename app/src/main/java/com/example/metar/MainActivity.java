@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Elements metaElems = doc.select("meta");
                     Elements links = doc.select("a[href]");
-                    Elements tableRows = doc.select("table.versions > tbody > tr");
+                    Elements trs = doc.select("table tr");
 
 
                     builder.append(title).append("\n");
