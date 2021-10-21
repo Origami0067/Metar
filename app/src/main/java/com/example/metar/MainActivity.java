@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 try{
                     String url = uriBuilder();
                     System.out.println(url);
-                    Document doc = Jsoup.connect("https://www.aviationweather.gov/metar/data?ids=KATL&format=decoded&date=&hours=0&taf=on").get();
+                    Document doc = Jsoup.connect(url).get();
                     String title = doc.title();
 
                     Elements metaElems = doc.select("meta");
