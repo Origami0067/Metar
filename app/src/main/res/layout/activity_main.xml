@@ -38,7 +38,8 @@
             android:layout_alignParentEnd="true"
             android:layout_marginStart="99dp"
             android:layout_marginEnd="102dp"
-            android:ems="10"/>
+            android:ems="10"
+            android:hint="Saisissez les codes séparés par des virgules"/>
 
     </RelativeLayout>
 
