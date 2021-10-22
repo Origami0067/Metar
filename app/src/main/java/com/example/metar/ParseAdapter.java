@@ -27,7 +27,7 @@ public class ParseAdapter extends RecyclerView.Adapter<ParseAdapter.ViewHolder>{
     @NonNull
     @Override
     public ParseAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.parse_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_test, parent, false);
         return new ViewHolder(view);
     }
 
@@ -35,7 +35,7 @@ public class ParseAdapter extends RecyclerView.Adapter<ParseAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull ParseAdapter.ViewHolder holder, int position) {
         ParseItem parseItem = parseItems.get(position);
         holder.textView.setText(parseItem.getTitle());
-        Picasso.get().load(parseItem.getImgUrl()).into(holder.imageView);
+        //Picasso.get().load(parseItem.getImgUrl()).into(holder.imageView);
     }
 
     @Override
@@ -44,35 +44,15 @@ public class ParseAdapter extends RecyclerView.Adapter<ParseAdapter.ViewHolder>{
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         ImageView imageView;
         TextView textView;
 
         public ViewHolder(@NonNull View view) {
             super(view);
-            imageView = view.findViewById(R.id.imageView);
+            //imageView = view.findViewById(R.id.imageView);
             textView = view.findViewById(R.id.textView);
-            view.setOnClickListener(this);
         }
-
-        @Override
-        public void onClick(View view) {
-            int position = getAdapterPosition();
-            ParseItem parseItem = parseItems.get(position);
-
-            Intent intent = new Intent(context, DetailActivity.class);
-            intent.putExtra("title", parseItem.getTitle());
-            intent.putExtra("image", parseItem.getImgUrl());
-            intent.putExtra("detailUrl", parseItem.getDetailUrl());
-            context.startActivity(intent);
-        }
-    }
-
-
-    public void setFilter (ArrayList<ParseItem> newList) {
-        parseItems = new ArrayList<>();
-        parseItems.addAll(newList);
-        notifyDataSetChanged();
     }
 }

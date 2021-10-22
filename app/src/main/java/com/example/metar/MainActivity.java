@@ -29,12 +29,13 @@ public class MainActivity extends AppCompatActivity {
     private ParseAdapter adapter;
     private ArrayList<ParseItem> parseItems = new ArrayList<>();
     private ProgressBar progressBar;
-w
+
     private Button getBtn;
     private TextView resultat;
     private EditText codeOACI;
     private String code;
 
+    public String url;
 
     private String uriBuilder(String code) {
         Uri.Builder builder = new Uri.Builder();
@@ -91,10 +92,10 @@ w
                 final StringBuilder builder = new StringBuilder();
                 code = String.valueOf(codeOACI.getText());
 
-                try{
-                    String url = uriBuilder(code);
+                //try{
+                    url = uriBuilder(code);
                     System.out.println(url);
-                    Document doc = Jsoup.connect(url).get();//url
+                    /*Document doc = Jsoup.connect(url).get();//url
                     String title = doc.title();
 
                     Elements trs = doc.select("table tr");
@@ -106,18 +107,11 @@ w
                         //Element td = tds.first();
                         text+=tds.text()+"\n";
                     }
-                    builder.append(text);
-
-                    /*builder.append(title).append("\n");
-
-                    for (Element link : links) {
-                        builder.append("\n").append("Link : ").append(link.attr("href"))
-                                .append("\n").append("Text : ").append(link.text());
-                    }*/
-                }
-                catch (IOException e) {
+                    builder.append(text);*/
+                //}
+                /*catch (IOException e) {
                     e.printStackTrace();
-                }
+                }*/
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -150,11 +144,10 @@ w
         protected Void doInBackground(Void... voids) {
 
             try {
-                String url = "https://www.cinemaqatar.com/";
 
                 Document doc = Jsoup.connect(url).get();
 
-                Elements data = doc.select("span.thumbnail");
+                Elements data = doc.select("table tr");
                 int size = data.size();
                 Log.d("doc", "doc: "+doc);
                 Log.d("data", "data: "+data);
@@ -175,7 +168,7 @@ w
                             .eq(i)
                             .attr("href");
 
-                    parseItems.add(new ParseItem(imgUrl, title, detailUrl));
+                    //parseItems.add(new ParseItem(imgUrl, title, detailUrl));
                     Log.d("items", "img: " + imgUrl + " . title: " + title);
                 }
 
