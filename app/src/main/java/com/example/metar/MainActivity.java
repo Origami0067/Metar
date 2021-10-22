@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 .appendQueryParameter("format", "decoded")
                 .appendQueryParameter("date","")
                 .appendQueryParameter("hours", "0")
-                .appendQueryParameter("taf", "on");
+                .appendQueryParameter("taf", "false");
         String myUrl = builder.build().toString();
         return myUrl;
     }

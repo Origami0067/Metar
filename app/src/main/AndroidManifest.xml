@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Metar">
         <activity
+            android:name=".test"
+            android:exported="false" />
+        <activity
             android:name=".Results"
             android:exported="false" />
         <activity
