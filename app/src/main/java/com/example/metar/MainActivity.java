@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 try{
                     String url = uriBuilder(code);
                     System.out.println(url);
-                    Document doc = Jsoup.connect(url).get();
+                    Document doc = Jsoup.connect(url).get();//url
                     String title = doc.title();
 
                     Elements trs = doc.select("table tr");
