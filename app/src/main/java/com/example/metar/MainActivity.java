@@ -168,7 +168,11 @@ public class MainActivity extends AppCompatActivity {
                             .eq(i)
                             .attr("href");
 
+<<<<<<< Updated upstream
                     //parseItems.add(new ParseItem(imgUrl, title, detailUrl));
+=======
+                    parseItems.add(new ParseItem());
+>>>>>>> Stashed changes
                     Log.d("items", "img: " + imgUrl + " . title: " + title);
                 }
 
