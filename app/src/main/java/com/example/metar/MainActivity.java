@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private ParseAdapter adapter;
     private ArrayList<ParseItem> parseItems = new ArrayList<>();
     private ProgressBar progressBar;
-
+w
     private Button getBtn;
     private TextView resultat;
     private EditText codeOACI;
@@ -187,5 +187,4 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
-}
 }
