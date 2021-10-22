@@ -93,8 +93,8 @@ public class MainActivity extends AppCompatActivity {
                 code = String.valueOf(codeOACI.getText());
 
                 //try{
-                    url = uriBuilder(code);
-                    System.out.println(url);
+                url = uriBuilder(code);
+                System.out.println(url);
                     /*Document doc = Jsoup.connect(url).get();//url
                     String title = doc.title();
 
@@ -168,11 +168,7 @@ public class MainActivity extends AppCompatActivity {
                             .eq(i)
                             .attr("href");
 
-<<<<<<< Updated upstream
                     //parseItems.add(new ParseItem(imgUrl, title, detailUrl));
-=======
-                    parseItems.add(new ParseItem());
->>>>>>> Stashed changes
                     Log.d("items", "img: " + imgUrl + " . title: " + title);
                 }
 
