@@ -8,8 +8,16 @@
         <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/activity_result.xml" value="0.259375" />
         <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/activity_results.xml" value="0.2" />
         <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/content_results.xml" value="0.152" />
+<<<<<<< Updated upstream
         <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/fragment_first.xml" value="0.176" />
         <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/fragment_second.xml" value="0.2" />
+=======
+        <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/fragment_airport_infos.xml" value="0.2453125" />
+        <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/fragment_first.xml" value="0.176" />
+        <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/fragment_metar.xml" value="0.259375" />
+        <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/fragment_second.xml" value="0.2" />
+        <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/fragment_taf.xml" value="0.2453125" />
+>>>>>>> Stashed changes
         <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/fragment_third.xml" value="0.259375" />
       </map>
     </option>
