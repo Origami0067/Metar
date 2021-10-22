@@ -152,7 +152,19 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("doc", "doc: "+doc);
                 Log.d("data", "data: "+data);
                 Log.d("size", ""+size);
-                for (int i = 0; i < size; i++) {
+                String title = doc.title();
+
+                Elements trs = doc.select("table tr");
+
+                String text="";
+
+                for (Element tr : trs) {
+                    Elements tds = tr.getElementsByTag("td");
+                    //Element td = tds.first();
+                    text+=tds.text()+"\n";
+                }
+                System.out.println(text);
+                /*for (int i = 0; i < size; i++) {
                     String imgUrl = data.select("span.thumbnail")
                             .select("img")
                             .eq(i)
@@ -170,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
 
                     //parseItems.add(new ParseItem(imgUrl, title, detailUrl));
                     Log.d("items", "img: " + imgUrl + " . title: " + title);
-                }
+                }*/
 
             } catch (IOException e) {
                 e.printStackTrace();
