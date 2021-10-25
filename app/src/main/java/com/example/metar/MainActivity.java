@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.view.View;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -22,13 +25,17 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class MainActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
-    private ParseAdapter adapter;
-    private ArrayList<ParseItem> parseItems = new ArrayList<>();
-    private ProgressBar progressBar;
+
+    ListView listview;
+    ListAdapter adapter;
+    ProgressDialog mProgressDialog;
+    ArrayList<HashMap<String, String>> arraylist;
+    static String RANK="rank";
+
 
     private Button getBtn;
     private TextView resultat;
@@ -43,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
                 .authority("www.aviationweather.gov")
                 .appendPath("metar")
                 .appendPath("data")
-                .appendQueryParameter("ids",code)
+                .appendQueryParameter("ids", code)
                 .appendQueryParameter("format", "decoded")
-                .appendQueryParameter("date","")
+                .appendQueryParameter("date", "")
                 .appendQueryParameter("hours", "0")
                 .appendQueryParameter("taf", "false");
         String myUrl = builder.build().toString();
@@ -57,22 +64,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        progressBar = findViewById(R.id.progressBar);
-        recyclerView = findViewById(R.id.recyclerView);
-
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ParseAdapter(parseItems, this);
-        recyclerView.setAdapter(adapter);
-
-        Content content = new Content();
-        content.execute();
-
         //get instances of the Button and the TextView from our layout
-        resultat = (TextView)findViewById(R.id.resultat);
-        codeOACI = (EditText)findViewById(R.id.codeOACI);
-        getBtn = (Button)findViewById(R.id.getBtn);
-
+        resultat = (TextView) findViewById(R.id.resultat);
+        codeOACI = (EditText) findViewById(R.id.codeOACI);
+        getBtn = (Button) findViewById(R.id.getBtn);
 
 
         //set a click listener on the Button to start the download of the website when the user will click it
@@ -80,11 +75,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 getSiteWeb();
+                new JsoupListView().execute();
             }
         });
     }
 
-    private void getSiteWeb(){
+    private void getSiteWeb() {
         //In the getSiteWeb() method, we create a new Thread to download the content of the website
         new Thread(new Runnable() {
             @Override
@@ -92,15 +88,15 @@ public class MainActivity extends AppCompatActivity {
                 final StringBuilder builder = new StringBuilder();
                 code = String.valueOf(codeOACI.getText());
 
-                //try{
+                try{
                 url = uriBuilder(code);
                 System.out.println(url);
-                    /*Document doc = Jsoup.connect(url).get();//url
+                    Document doc = Jsoup.connect(url).get();//url
                     String title = doc.title();
 
-                    Elements trs = doc.select("table tr");
+                    //Elements trs = doc.select("table tr");
 
-                    String text="";
+                    /*String text="";
 
                     for (Element tr : trs) {
                         Elements tds = tr.getElementsByTag("td");
@@ -108,10 +104,10 @@ public class MainActivity extends AppCompatActivity {
                         text+=tds.text()+"\n";
                     }
                     builder.append(text);*/
-                //}
-                /*catch (IOException e) {
+                }
+                catch (IOException e) {
                     e.printStackTrace();
-                }*/
+                }
 
                 runOnUiThread(new Runnable() {
                     @Override
@@ -123,73 +119,88 @@ public class MainActivity extends AppCompatActivity {
         }).start();
     }
 
-    private class Content extends AsyncTask<Void,Void,Void> {
+
+    private class JsoupListView extends AsyncTask<Void,Void,Void> {
+
+        ArrayList<HashMap<String, String>> arraylist;
+        public ListView listView;
+        // Create a progressdialog
+        ProgressDialog mProgressDialog = new ProgressDialog(MainActivity.this);
+
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
-            progressBar.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.fade_in));
+            // Set progressdialog title
+            mProgressDialog.setTitle("Recherche en cours");
+            // Set progressdialog message
+            mProgressDialog.setMessage("Chargement...");
+            mProgressDialog.setIndeterminate(false);
+            // Show progressdialog
+            mProgressDialog.show();
         }
 
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            progressBar.setVisibility(View.GONE);
-            progressBar.startAnimation(AnimationUtils.loadAnimation(MainActivity.this, android.R.anim.fade_out));
-            adapter.notifyDataSetChanged();
-        }
 
         @Override
         protected Void doInBackground(Void... voids) {
+            // Create an array
+            arraylist = new ArrayList<HashMap<String, String>>();
+
 
             try {
 
+                // Connect to the Website URL
                 Document doc = Jsoup.connect(url).get();
+                // Identify Div id=awc_main_content_wrap
+                for (Element table : doc.select("table")) {
 
-                Elements data = doc.select("table tr");
-                int size = data.size();
-                Log.d("doc", "doc: "+doc);
-                Log.d("data", "data: "+data);
-                Log.d("size", ""+size);
-                String title = doc.title();
+                    // Identify all the table row's(tr)
+                    for (Element row : table.select("tr")) {
+                        HashMap<String, String> map = new HashMap<String, String>();
 
-                Elements trs = doc.select("table tr");
+                        // Identify all the table cell's(td)
+                        Elements tds = row.select("td");
 
-                String text="";
+                        // Identify all img src's
+                        //Elements imgSrc = row.select("img[src]");
+                        // Get only src from img src
+                        //String imgSrcStr = imgSrc.attr("src");
 
-                for (Element tr : trs) {
-                    Elements tds = tr.getElementsByTag("td");
-                    //Element td = tds.first();
-                    text+=tds.text()+"\n";
+                        // Retrive Jsoup Elements
+                        // Get the first td
+                        map.put("rank", tds.get(0).text());
+                        // Get the second td
+                        //map.put("country", tds.get(1).text());
+                        // Get the third td
+                        //map.put("population", tds.get(2).text());
+                        // Get the image src links
+                        //map.put("flag", imgSrcStr);
+                        // Set all extracted Jsoup Elements into the array
+                        arraylist.add(map);
+                    }
                 }
-                System.out.println(text);
-                /*for (int i = 0; i < size; i++) {
-                    String imgUrl = data.select("span.thumbnail")
-                            .select("img")
-                            .eq(i)
-                            .attr("src");
-
-                    String title = data.select("h4.gridminfotitle")
-                            .select("span")
-                            .eq(i)
-                            .text();
-
-                    String detailUrl = data.select("h4.gridminfotitle")
-                            .select("a")
-                            .eq(i)
-                            .attr("href");
-
-                    //parseItems.add(new ParseItem(imgUrl, title, detailUrl));
-                    Log.d("items", "img: " + imgUrl + " . title: " + title);
-                }*/
-
             } catch (IOException e) {
+                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
-
             return null;
         }
+
+
+        @Override
+        protected void onPostExecute(Void result) {
+            // Locate the listview in listview_main.xml
+            listview = (ListView) findViewById(R.id.listview);
+            // Pass the results into ListViewAdapter.java
+            adapter = new ListViewAdapter(MainActivity.this, arraylist);
+            // Set the adapter to the ListView
+            listview.setAdapter(adapter);
+            // Close the progressdialog
+            mProgressDialog.dismiss();
+        }
     }
+
+
+
 }
