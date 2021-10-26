@@ -152,11 +152,19 @@ public class MainActivity extends AppCompatActivity {
                 // Connect to the Website URL
                 Document doc = Jsoup.connect(url).get();
                 // Identify Div id=awc_main_content_wrap
-                for (Element table : doc.select("table")) {
+
+                for(Element div : doc.select("div[id=awc_main_content_wrap]")){
+
+                for (Element table : div.select("table")) {
+
+                    HashMap<String, String> map = new HashMap<String, String>();
+                    Elements trs = table.select("tr");
+                    map.put("rank", trs.get(0).text());
+                    arraylist.add(map);
 
                     // Identify all the table row's(tr)
-                    for (Element row : table.select("tr")) {
-                        HashMap<String, String> map = new HashMap<String, String>();
+                    /*for (Element row : table.select("tr")) {
+                        //HashMap<String, String> map = new HashMap<String, String>();
 
                         // Identify all the table cell's(td)
                         Elements tds = row.select("td");
@@ -177,7 +185,9 @@ public class MainActivity extends AppCompatActivity {
                         //map.put("flag", imgSrcStr);
                         // Set all extracted Jsoup Elements into the array
                         arraylist.add(map);
-                    }
+                    }*/
+                }
+
                 }
             } catch (IOException e) {
                 // TODO Auto-generated catch block
