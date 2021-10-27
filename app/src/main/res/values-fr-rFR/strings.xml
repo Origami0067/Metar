@@ -4,4 +4,6 @@
     <string name="btnShow">Rechercher</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hintSearch">Entrez les codes OACI séparés par des virgules</string>
+    <string name="loadingRessources">Chargement</string>
+    <string name="emptyField">Entrez au moins un code OACI</string>
 </resources>

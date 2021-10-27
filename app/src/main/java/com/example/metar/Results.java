@@ -4,12 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TableLayout;
 
 import com.google.android.material.tabs.TabLayout;
 
 public class Results extends AppCompatActivity {
+
+    String codeOACI;
 
     TabLayout layoutMT;
     ViewPager2 viewSliders;
@@ -20,6 +23,9 @@ public class Results extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
+        Intent intent = getIntent();
+        codeOACI = intent.getStringExtra("code");
+
         layoutMT=findViewById(R.id.layoutMT);
         viewSliders=findViewById(R.id.viewSliders);
 
@@ -29,7 +35,7 @@ public class Results extends AppCompatActivity {
 
         layoutMT.addTab(layoutMT.newTab().setText("Metar"));
         layoutMT.addTab(layoutMT.newTab().setText("Taf"));
-        layoutMT.addTab(layoutMT.newTab().setText("AirportInfo"));
+        layoutMT.addTab(layoutMT.newTab().setText("Infos"));
 
         layoutMT.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

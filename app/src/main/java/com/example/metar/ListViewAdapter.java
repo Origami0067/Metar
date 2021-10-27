@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +28,7 @@ public class ListViewAdapter extends BaseAdapter {
         this.context = context;
         data = arraylist;
         //imageLoader = new ImageLoader(context);
+
     }
 
 
@@ -81,9 +84,15 @@ public class ListViewAdapter extends BaseAdapter {
             public void onClick(View arg0) {
                 // Get the position
                 resultp = data.get(position);
-                //Intent intent = new Intent(context, SingleItemView.class);
+
+                System.out.println("resultp : \n"+resultp+"\n");
+
+                String oaci = resultp.toString().substring(6,10);
+                Toast toast = Toast.makeText(context, oaci, Toast.LENGTH_SHORT);
+                toast.show();
+                Intent intent = new Intent(context, Results.class);
                 // Pass all data rank
-                //intent.putExtra("rank", resultp.get(MainActivity.RANK));
+                intent.putExtra("code", oaci);
                 // Pass all data country
                 /*intent.putExtra("country", resultp.get(MainActivity.COUNTRY));
                 // Pass all data population
@@ -91,10 +100,12 @@ public class ListViewAdapter extends BaseAdapter {
                 // Pass all data flag
                 intent.putExtra("flag", resultp.get(MainActivity.FLAG));*/
                 //Start SingleItemView Class
-                //context.startActivity(intent);
+                context.startActivity(intent);
 
             }
         });
         return itemView;
+
+
     }
 }

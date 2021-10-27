@@ -1,22 +1,20 @@
 package com.example.metar;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -32,10 +30,9 @@ public class MainActivity extends AppCompatActivity {
 
     ListView listview;
     ListAdapter adapter;
-    ProgressDialog mProgressDialog;
-    ArrayList<HashMap<String, String>> arraylist;
+    ArrayList<String> items;
+    ArrayList<HashMap<String, String>> tdList;
     static String RANK="rank";
-
 
     private Button getBtn;
     private TextView resultat;
@@ -43,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private String code;
 
     public String url;
+    Context context = this;
+    int duration = Toast.LENGTH_SHORT;
 
     private String uriBuilder(String code) {
         Uri.Builder builder = new Uri.Builder();
@@ -74,11 +73,24 @@ public class MainActivity extends AppCompatActivity {
         getBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSiteWeb();
-                new JsoupListView().execute();
+                System.out.println("CODE OACI : "+codeOACI.getText().toString());
+                if (!codeOACI.getText().toString().equals("")){ //to be sure there's at least one code
+                    getSiteWeb();
+                    new JsoupListView().execute();
+                    String[] OACIs = codeOACI.getText().toString().split(",");
+                    for (int i=0; i<OACIs.length; i++){
+                        //items.add(OACIs[i]);
+                    }
+                }else{
+                    CharSequence text = getResources().getString(R.string.emptyField);
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+                }
             }
         });
     }
+
+
 
     private void getSiteWeb() {
         //In the getSiteWeb() method, we create a new Thread to download the content of the website
@@ -122,8 +134,6 @@ public class MainActivity extends AppCompatActivity {
 
     private class JsoupListView extends AsyncTask<Void,Void,Void> {
 
-        ArrayList<HashMap<String, String>> arraylist;
-        public ListView listView;
         // Create a progressdialog
         ProgressDialog mProgressDialog = new ProgressDialog(MainActivity.this);
 
@@ -132,9 +142,8 @@ public class MainActivity extends AppCompatActivity {
         protected void onPreExecute() {
             super.onPreExecute();
             // Set progressdialog title
-            mProgressDialog.setTitle("Recherche en cours");
             // Set progressdialog message
-            mProgressDialog.setMessage("Chargement...");
+            mProgressDialog.setMessage(getResources().getString(R.string.loadingRessources));
             mProgressDialog.setIndeterminate(false);
             // Show progressdialog
             mProgressDialog.show();
@@ -144,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             // Create an array
-            arraylist = new ArrayList<HashMap<String, String>>();
+            tdList = new ArrayList<HashMap<String, String>>();
 
 
             try {
@@ -161,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                     Elements trs = table.select("tr");
                     Elements td = trs.select("td");
                     map.put("rank", td.get(1).text());
-                    arraylist.add(map);
+                    tdList.add(map);
 
                     // Identify all the table row's(tr)
 /*
@@ -193,7 +202,6 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
 
@@ -206,12 +214,16 @@ public class MainActivity extends AppCompatActivity {
             // Locate the listview in listview_main.xml
             listview = (ListView) findViewById(R.id.listview);
             // Pass the results into ListViewAdapter.java
-            adapter = new ListViewAdapter(MainActivity.this, arraylist);
+            adapter = new ListViewAdapter(MainActivity.this, tdList);
             // Set the adapter to the ListView
             listview.setAdapter(adapter);
             // Close the progressdialog
             mProgressDialog.dismiss();
+
         }
+
+
+
     }
 
 
