@@ -163,7 +163,8 @@ public class MainActivity extends AppCompatActivity {
                     arraylist.add(map);
 
                     // Identify all the table row's(tr)
-                    /*for (Element row : table.select("tr")) {
+/*
+                    for (Element row : table.select("tr")) {
                         //HashMap<String, String> map = new HashMap<String, String>();
 
                         // Identify all the table cell's(td)
@@ -185,7 +186,8 @@ public class MainActivity extends AppCompatActivity {
                         //map.put("flag", imgSrcStr);
                         // Set all extracted Jsoup Elements into the array
                         arraylist.add(map);
-                    }*/
+                    }
+*/
                 }
 
                 }

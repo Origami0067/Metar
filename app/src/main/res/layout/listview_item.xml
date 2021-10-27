@@ -7,7 +7,20 @@
     <TextView
         android:id="@+id/rank"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:textStyle="bold"
+        android:layout_marginLeft="55dp"
+        android:layout_marginTop="10dp"
+        />
+    <ImageView
+        android:id="@+id/plane"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/large_airport_marker"/>
 
     <!--<ImageView
         android:id="@+id/flag"
