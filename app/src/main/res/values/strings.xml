@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TarTaf</string>
+    <string name="app_name">Tartaf</string>
     <string name="btnShow">Show data</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hintSearch">Enter OACI codes separated by commas</string>
