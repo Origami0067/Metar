@@ -159,7 +159,8 @@ public class MainActivity extends AppCompatActivity {
 
                     HashMap<String, String> map = new HashMap<String, String>();
                     Elements trs = table.select("tr");
-                    map.put("rank", trs.get(0).text());
+                    Elements td = trs.select("td");
+                    map.put("rank", td.get(1).text());
                     arraylist.add(map);
 
                     // Identify all the table row's(tr)
