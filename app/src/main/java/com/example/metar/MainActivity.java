@@ -73,14 +73,9 @@ public class MainActivity extends AppCompatActivity {
         getBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("CODE OACI : "+codeOACI.getText().toString());
                 if (!codeOACI.getText().toString().equals("")){ //to be sure there's at least one code
                     getSiteWeb();
                     new JsoupListView().execute();
-                    String[] OACIs = codeOACI.getText().toString().split(",");
-                    for (int i=0; i<OACIs.length; i++){
-                        //items.add(OACIs[i]);
-                    }
                 }else{
                     CharSequence text = getResources().getString(R.string.emptyField);
                     Toast toast = Toast.makeText(context, text, duration);

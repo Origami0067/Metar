@@ -23,7 +23,7 @@ public class Taf extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
+    private String code;
     private String mParam2;
 
     public Taf() {
@@ -51,8 +51,9 @@ public class Taf extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("Taf onCreate");
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
+            code = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
@@ -61,6 +62,7 @@ public class Taf extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        System.out.println("Taf onCreateView");
         return inflater.inflate(R.layout.fragment_taf, container, false);
     }
 }

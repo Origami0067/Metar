@@ -8,7 +8,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TableLayout;
 
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import com.google.android.material.tabs.TabLayout;
+
+import java.io.IOException;
 
 public class Results extends AppCompatActivity {
 
@@ -26,6 +34,11 @@ public class Results extends AppCompatActivity {
         Intent intent = getIntent();
         codeOACI = intent.getStringExtra("code");
 
+        //GET SITE WEB
+        String url="https://www.aviationweather.gov/metar/data?ids="+codeOACI+"&format=decoded&hours=0&taf=on&layout=off";
+        getSiteWeb(url);
+        //GET SITE WEB
+
         layoutMT=findViewById(R.id.layoutMT);
         viewSliders=findViewById(R.id.viewSliders);
 
@@ -41,6 +54,7 @@ public class Results extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewSliders.setCurrentItem(tab.getPosition());
+                System.out.println("getPosition() "+tab.getPosition());
             }
 
             @Override
@@ -61,5 +75,33 @@ public class Results extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void getSiteWeb(String url) {
+        //In the getSiteWeb() method, we create a new Thread to download the content of the website
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    globale.result = Jsoup.connect(url).get();//url
+                    String title = globale.result .title();
+                    System.out.println("title : "+title);
+
+                    //Elements trs = doc.select("table tr");
+
+                    /*String text="";
+
+                    for (Element tr : trs) {
+                        Elements tds = tr.getElementsByTag("td");
+                        //Element td = tds.first();
+                        text+=tds.text()+"\n";
+                    }
+                    builder.append(text);*/
+                }
+                catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

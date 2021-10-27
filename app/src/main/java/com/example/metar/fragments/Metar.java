@@ -23,8 +23,8 @@ public class Metar extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private String code;
+    private String title;
 
     public Metar() {
         // Required empty public constructor
@@ -45,15 +45,17 @@ public class Metar extends Fragment {
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
+        System.out.println("Metar new fragment");
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        System.out.println("Metar onCreate");
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            code = getArguments().getString(ARG_PARAM1);
+            title = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -61,6 +63,7 @@ public class Metar extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        System.out.println("Metar onCreateView");
         return inflater.inflate(R.layout.fragment_metar, container, false);
     }
 }
