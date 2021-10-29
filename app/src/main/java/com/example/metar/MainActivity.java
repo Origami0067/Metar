@@ -158,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPreExecute();
             // Set progressdialog title
             // Set progressdialog message
-            mProgressDialog.setMessage(getResources().getString(R.string.loadingRessources));
+            mProgressDialog.setMessage( ().getString(R.string.loadingRessources));
             mProgressDialog.setIndeterminate(false);
             // Show progressdialog
             mProgressDialog.show();
