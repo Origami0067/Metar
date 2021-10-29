@@ -68,12 +68,6 @@ public class Metar extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         System.out.println("Metar onCreateView");
-
-        View view = inflater.inflate(R.layout.fragment_metar, container, false);
-        textview = view.findViewById(R.id.textview);
-        Bundle bundle = getArguments();
-        String message = bundle.getString("message");
-        textview.setText(message);
-        return view;
+        return inflater.inflate(R.layout.fragment_metar, container, false);
     }
 }
