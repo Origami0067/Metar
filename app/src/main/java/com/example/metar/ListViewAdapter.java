@@ -59,16 +59,16 @@ public class ListViewAdapter extends BaseAdapter {
         // Get the position
         resultp = data.get(position);
 
-        // Locate the TextViews in listview_item.xml
-        rank = (TextView) itemView.findViewById(R.id.rank);
         // Locate the ImageView in listview_item.xml
         flag = (ImageView) itemView.findViewById(R.id.flag);
+        // Locate the TextViews in listview_item.xml
+        rank = (TextView) itemView.findViewById(R.id.rank);
 
-        // Capture position and set results to the TextViews
-        rank.setText(resultp.get(MainActivity.RANK));
         // Capture position and set results to the ImageView
         // Passes flag images URL into ImageLoader.class
         imageLoader.DisplayImage(resultp.get(MainActivity.FLAG), flag);
+        // Capture position and set results to the TextViews
+        rank.setText(resultp.get(MainActivity.RANK));
         // Capture ListView item click
         itemView.setOnClickListener(new View.OnClickListener() {
 
@@ -78,14 +78,15 @@ public class ListViewAdapter extends BaseAdapter {
                 resultp = data.get(position);
 
                 System.out.println("resultp : \n"+resultp+"\n");
+                System.out.println("resultp rank : \n"+resultp.get("rank")+"\n");
+                String oaci=resultp.get("rank").toString().substring(0,4);
 
-                String oaci = resultp.toString().substring(6,10);
                 Toast toast = Toast.makeText(context, oaci, Toast.LENGTH_SHORT);
                 toast.show();
                 Intent intent = new Intent(context, Results.class);
                 // Pass all data rank
-                intent.putExtra("code", oaci);
                 intent.putExtra("flag", resultp.get(MainActivity.FLAG));
+                intent.putExtra("code", oaci);
                 // Pass all data country
                 /*intent.putExtra("country", resultp.get(MainActivity.COUNTRY));
                 // Pass all data population
