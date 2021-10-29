@@ -21,15 +21,13 @@ import java.io.IOException;
 public class Results extends AppCompatActivity {
 
 
-    String codeOACI;
+    public String codeOACI="no OACI code";
     public Document doc;
     TabLayout layoutMT;
     ViewPager2 viewSliders;
     FragmentAdapter adapter;
 
-    /*public Results(Document docs){
-        docs=this.doc;
-    }*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +86,9 @@ public class Results extends AppCompatActivity {
             }
         });
 
+    }
+
+    public Results(){
     }
 
     private void getSiteWeb(String url) {

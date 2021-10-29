@@ -38,12 +38,12 @@ public class Metar extends Fragment {
     private TextView resultat;
 
     Results A = new Results();
-    Document doc2 = A.doc;
+    String codeOACI = A.codeOACI;
 
     //Elements trs = doc2.select("table tr");
 
 
-    String text="";
+    public String text="";
 
 
     public Metar() {
@@ -86,48 +86,11 @@ public class Metar extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_metar, container, false);
         resultat = (TextView)v.findViewById(R.id.textview);
-        getSiteWeb(doc2);
+        resultat.setText(codeOACI);
         System.out.println("Metar onCreateView");
         return v;
 
     }
 
-    private void getSiteWeb(Document doc) {
-        //In the getSiteWeb() method, we create a new Thread to download the content of the website
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final StringBuilder builder = new StringBuilder();
 
-                try{
-
-                    Elements trs = doc.select("table tr");
-                    String text="";
-
-                    builder.append(title).append("\n");
-
-                        builder.append("\n");
-                        for (Element tr : trs) {
-                            Elements tds = tr.getElementsByTag("td");
-                            //Element td = tds.first();
-                            text += tds.text() + "\n";
-                        }
-                        builder.append(text);
-                        String title = doc.title();
-
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        resultat.setText(builder.toString());
-                    }
-                });
-            }
-        }).start();
-    }
 }
