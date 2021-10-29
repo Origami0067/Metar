@@ -15,9 +15,6 @@
             android:name=".Results"
             android:exported="false" />
         <activity
-            android:name=".Result"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

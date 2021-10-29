@@ -2,6 +2,7 @@ package com.example.metar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
@@ -14,6 +15,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.example.metar.fragments.AirportInfos;
+import com.example.metar.fragments.Metar;
+import com.example.metar.fragments.Taf;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
@@ -45,6 +49,16 @@ public class Results extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         adapter = new FragmentAdapter(fm, getLifecycle());
         viewSliders.setAdapter(adapter);
+
+        final FragmentTransaction fragmentTransaction = fm.beginTransaction();
+        final Metar metarFrag = new Metar();
+        final AirportInfos infosFrag = new AirportInfos();
+        final Taf tafFrag = new Taf();
+
+        Bundle b = new Bundle();
+        b.putString("message", "bonjour les fragments");
+        metarFrag.setArguments(b);
+        getSupportFragmentManager().beginTransaction().replace(R.id.viewSliders, metarFrag).commit();
 
         layoutMT.addTab(layoutMT.newTab().setText("Metar"));
         layoutMT.addTab(layoutMT.newTab().setText("Taf"));
@@ -82,25 +96,22 @@ public class Results extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try{
-                    globale.result = Jsoup.connect(url).get();//url
-                    String title = globale.result .title();
-                    System.out.println("title : "+title);
+                /*try{
 
-                    //Elements trs = doc.select("table tr");
+                    Elements trs = doc.select("table tr");
 
-                    /*String text="";
+                    String text="";
 
                     for (Element tr : trs) {
                         Elements tds = tr.getElementsByTag("td");
                         //Element td = tds.first();
                         text+=tds.text()+"\n";
                     }
-                    builder.append(text);*/
+                    builder.append(text);
                 }
                 catch (IOException e) {
                     e.printStackTrace();
-                }
+                }*/
             }
         }).start();
     }

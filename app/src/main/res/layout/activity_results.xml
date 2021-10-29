@@ -6,10 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Results">
 
-    <com.google.android.material.tabs.TabLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layoutMT"/>
+
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewSliders"
@@ -17,5 +14,10 @@
         android:layout_height="match_parent"
         android:layout_below="@id/layoutMT" />
 
+
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layoutMT"/>
 
 </RelativeLayout>

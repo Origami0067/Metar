@@ -7,8 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.metar.R;
+import com.example.metar.Results;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,6 +23,8 @@ public class Metar extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    TextView textview;
 
     // TODO: Rename and change types of parameters
     private String code;
@@ -64,6 +68,12 @@ public class Metar extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         System.out.println("Metar onCreateView");
-        return inflater.inflate(R.layout.fragment_metar, container, false);
+
+        View view = inflater.inflate(R.layout.fragment_metar, container, false);
+        textview = view.findViewById(R.id.textview);
+        Bundle bundle = getArguments();
+        String message = bundle.getString("message");
+        textview.setText(message);
+        return view;
     }
 }
