@@ -4,17 +4,23 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -22,6 +28,11 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,14 +41,18 @@ public class MainActivity extends AppCompatActivity {
 
     ListView listview;
     ListAdapter adapter;
+    int drapeau[] = {R.drawable.fr};
     ArrayList<String> items;
     ArrayList<HashMap<String, String>> tdList;
     static String RANK="rank";
+    static String FLAG = "flag";
+
 
     private Button getBtn;
     private TextView resultat;
     private EditText codeOACI;
     private String code;
+    private String countryCode;
 
     public String url;
     Context context = this;
@@ -58,6 +73,17 @@ public class MainActivity extends AppCompatActivity {
         return myUrl;
     }
 
+    private String srcBuilder(String countryCode) {
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("https")
+                .authority("purecatamphetamine.github.io")
+                .appendPath("country-flag-icons")
+                .appendPath("3x2")
+                .appendPath(countryCode+".svg");
+        String myUrl = builder.build().toString();
+        return myUrl;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,9 +99,14 @@ public class MainActivity extends AppCompatActivity {
         getBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                System.out.println("CODE OACI : "+codeOACI.getText().toString());
                 if (!codeOACI.getText().toString().equals("")){ //to be sure there's at least one code
                     getSiteWeb();
                     new JsoupListView().execute();
+                    String[] OACIs = codeOACI.getText().toString().split(",");
+                    for (int i=0; i<OACIs.length; i++){
+                        //items.add(OACIs[i]);
+                    }
                 }else{
                     CharSequence text = getResources().getString(R.string.emptyField);
                     Toast toast = Toast.makeText(context, text, duration);
@@ -100,17 +131,6 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(url);
                     Document doc = Jsoup.connect(url).get();//url
                     String title = doc.title();
-
-                    //Elements trs = doc.select("table tr");
-
-                    /*String text="";
-
-                    for (Element tr : trs) {
-                        Elements tds = tr.getElementsByTag("td");
-                        //Element td = tds.first();
-                        text+=tds.text()+"\n";
-                    }
-                    builder.append(text);*/
                 }
                 catch (IOException e) {
                     e.printStackTrace();
@@ -164,7 +184,24 @@ public class MainActivity extends AppCompatActivity {
                     HashMap<String, String> map = new HashMap<String, String>();
                     Elements trs = table.select("tr");
                     Elements td = trs.select("td");
+                    countryCode = td.get(1).text();
+                    int size = countryCode.length();
+                    StringBuffer sb = new StringBuffer(countryCode);
+                    sb.delete(countryCode.length() - 1, countryCode.length());
+
+                    while(sb.length()!= 2){
+                        sb.delete(0, 1);
+                    }
+
+                    System.out.println(sb);
+                    String cCode = sb.toString();
+
+                    String imgUrl = srcBuilder(cCode);
+                    System.out.println(imgUrl);
+
                     map.put("rank", td.get(1).text());
+                    map.put("flag", imgUrl);
+
                     tdList.add(map);
 
                     // Identify all the table row's(tr)

@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +18,7 @@ public class ListViewAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
     ArrayList<HashMap<String, String>> data;
-    //ImageLoader imageLoader;
+    ImageLoader imageLoader;
     HashMap<String, String> resultp = new HashMap<String, String>();
 
 
@@ -27,7 +26,7 @@ public class ListViewAdapter extends BaseAdapter {
                            ArrayList<HashMap<String, String>> arraylist) {
         this.context = context;
         data = arraylist;
-        //imageLoader = new ImageLoader(context);
+        imageLoader = new ImageLoader(context);
 
     }
 
@@ -51,9 +50,7 @@ public class ListViewAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         // Declare Variables
         TextView rank;
-        /*TextView country;
-        TextView population;
-        ImageView flag;*/
+        ImageView flag;
 
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -64,19 +61,14 @@ public class ListViewAdapter extends BaseAdapter {
 
         // Locate the TextViews in listview_item.xml
         rank = (TextView) itemView.findViewById(R.id.rank);
-        /*country = (TextView) itemView.findViewById(R.id.country);
-        population = (TextView) itemView.findViewById(R.id.population);*/
-
         // Locate the ImageView in listview_item.xml
-        //flag = (ImageView) itemView.findViewById(R.id.flag);
+        flag = (ImageView) itemView.findViewById(R.id.flag);
 
         // Capture position and set results to the TextViews
         rank.setText(resultp.get(MainActivity.RANK));
-        /*country.setText(resultp.get(MainActivity.COUNTRY));
-        population.setText(resultp.get(MainActivity.POPULATION));*/
         // Capture position and set results to the ImageView
         // Passes flag images URL into ImageLoader.class
-        //imageLoader.DisplayImage(resultp.get(MainActivity.FLAG), flag);
+        imageLoader.DisplayImage(resultp.get(MainActivity.FLAG), flag);
         // Capture ListView item click
         itemView.setOnClickListener(new View.OnClickListener() {
 
@@ -93,6 +85,7 @@ public class ListViewAdapter extends BaseAdapter {
                 Intent intent = new Intent(context, Results.class);
                 // Pass all data rank
                 intent.putExtra("code", oaci);
+                intent.putExtra("flag", resultp.get(MainActivity.FLAG));
                 // Pass all data country
                 /*intent.putExtra("country", resultp.get(MainActivity.COUNTRY));
                 // Pass all data population

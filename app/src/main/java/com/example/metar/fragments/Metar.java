@@ -7,8 +7,18 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.metar.R;
+import com.example.metar.Results;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.w3c.dom.ls.LSOutput;
+
+import java.io.IOException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +35,16 @@ public class Metar extends Fragment {
     // TODO: Rename and change types of parameters
     private String code;
     private String title;
+    private TextView resultat;
+
+    Results A = new Results();
+    Document doc2 = A.doc;
+
+    //Elements trs = doc2.select("table tr");
+
+
+    String text="";
+
 
     public Metar() {
         // Required empty public constructor
@@ -63,7 +83,51 @@ public class Metar extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        View v = inflater.inflate(R.layout.fragment_metar, container, false);
+        resultat = (TextView)v.findViewById(R.id.textview);
+        getSiteWeb(doc2);
         System.out.println("Metar onCreateView");
-        return inflater.inflate(R.layout.fragment_metar, container, false);
+        return v;
+
+    }
+
+    private void getSiteWeb(Document doc) {
+        //In the getSiteWeb() method, we create a new Thread to download the content of the website
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final StringBuilder builder = new StringBuilder();
+
+                try{
+
+                    Elements trs = doc.select("table tr");
+                    String text="";
+
+                    builder.append(title).append("\n");
+
+                        builder.append("\n");
+                        for (Element tr : trs) {
+                            Elements tds = tr.getElementsByTag("td");
+                            //Element td = tds.first();
+                            text += tds.text() + "\n";
+                        }
+                        builder.append(text);
+                        String title = doc.title();
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        resultat.setText(builder.toString());
+                    }
+                });
+            }
+        }).start();
     }
 }

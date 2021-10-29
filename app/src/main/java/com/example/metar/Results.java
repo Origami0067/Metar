@@ -20,22 +20,35 @@ import java.io.IOException;
 
 public class Results extends AppCompatActivity {
 
-    String codeOACI;
 
+    String codeOACI;
+    public Document doc;
     TabLayout layoutMT;
     ViewPager2 viewSliders;
     FragmentAdapter adapter;
+
+    /*public Results(Document docs){
+        docs=this.doc;
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
+
+
         Intent intent = getIntent();
         codeOACI = intent.getStringExtra("code");
 
+
         //GET SITE WEB
         String url="https://www.aviationweather.gov/metar/data?ids="+codeOACI+"&format=decoded&hours=0&taf=on&layout=off";
+        /*try {
+            Document doc = Jsoup.connect(url).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
         getSiteWeb(url);
         //GET SITE WEB
 
@@ -83,20 +96,7 @@ public class Results extends AppCompatActivity {
             @Override
             public void run() {
                 try{
-                    globale.result = Jsoup.connect(url).get();//url
-                    String title = globale.result .title();
-                    System.out.println("title : "+title);
-
-                    //Elements trs = doc.select("table tr");
-
-                    /*String text="";
-
-                    for (Element tr : trs) {
-                        Elements tds = tr.getElementsByTag("td");
-                        //Element td = tds.first();
-                        text+=tds.text()+"\n";
-                    }
-                    builder.append(text);*/
+                    doc = Jsoup.connect(url).get();//url
                 }
                 catch (IOException e) {
                     e.printStackTrace();
