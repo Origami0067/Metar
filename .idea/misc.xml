@@ -14,6 +14,9 @@
         <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/activity_map_airports.xml" value="0.259375" />
         <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/activity_results.xml" value="0.1" />
+        <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/fragment_airport_infos.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/fragment_metar.xml" value="0.13020833333333334" />
+        <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/fragment_taf.xml" value="0.13385416666666666" />
       </map>
     </option>
   </component>

@@ -60,7 +60,7 @@ public class Results extends AppCompatActivity {
         map=findViewById(R.id.floatingBtn);
 
         FragmentManager fm = getSupportFragmentManager();
-        adapter = new FragmentAdapter(fm, getLifecycle());
+        adapter = new FragmentAdapter(fm, getLifecycle(), this.codeOACI);
         viewSliders.setAdapter(adapter);
 
         layoutMT.addTab(layoutMT.newTab().setText("Metar"));

@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     int drapeau[] = {R.drawable.fr};
     ArrayList<String> items;
     ArrayList<HashMap<String, String>> tdList;
-    static String RANK="rank";
+    static String RANK = "rank";
     static String FLAG = "flag";
 
 
@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
                 .authority("purecatamphetamine.github.io")
                 .appendPath("country-flag-icons")
                 .appendPath("3x2")
-                .appendPath(countryCode+".svg");
+                .appendPath(countryCode + ".svg");
         String myUrl = builder.build().toString();
         return myUrl;
     }
@@ -99,15 +99,15 @@ public class MainActivity extends AppCompatActivity {
         getBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("CODE OACI : "+codeOACI.getText().toString());
-                if (!codeOACI.getText().toString().equals("")){ //to be sure there's at least one code
+                System.out.println("CODE OACI : " + codeOACI.getText().toString());
+                if (!codeOACI.getText().toString().equals("")) { //to be sure there's at least one code
                     getSiteWeb();
                     new JsoupListView().execute();
                     String[] OACIs = codeOACI.getText().toString().split(",");
-                    for (int i=0; i<OACIs.length; i++){
+                    for (int i = 0; i < OACIs.length; i++) {
                         //items.add(OACIs[i]);
                     }
-                }else{
+                } else {
                     CharSequence text = getResources().getString(R.string.emptyField);
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     private void getSiteWeb() {
@@ -126,13 +125,12 @@ public class MainActivity extends AppCompatActivity {
                 final StringBuilder builder = new StringBuilder();
                 code = String.valueOf(codeOACI.getText());
 
-                try{
-                url = uriBuilder(code);
-                System.out.println(url);
+                try {
+                    url = uriBuilder(code);
+                    System.out.println(url);
                     Document doc = Jsoup.connect(url).get();//url
                     String title = doc.title();
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
 
@@ -147,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private class JsoupListView extends AsyncTask<Void,Void,Void> {
+    private class JsoupListView extends AsyncTask<Void, Void, Void> {
 
         // Create a progressdialog
         ProgressDialog mProgressDialog = new ProgressDialog(MainActivity.this);
@@ -177,34 +175,34 @@ public class MainActivity extends AppCompatActivity {
                 Document doc = Jsoup.connect(url).get();
                 // Identify Div id=awc_main_content_wrap
 
-                for(Element div : doc.select("div[id=awc_main_content_wrap]")){
+                for (Element div : doc.select("div[id=awc_main_content_wrap]")) {
 
-                for (Element table : div.select("table")) {
+                    for (Element table : div.select("table")) {
 
-                    HashMap<String, String> map = new HashMap<String, String>();
-                    Elements trs = table.select("tr");
-                    Elements td = trs.select("td");
-                    countryCode = td.get(1).text();
-                    int size = countryCode.length();
-                    StringBuffer sb = new StringBuffer(countryCode);
-                    sb.delete(countryCode.length() - 1, countryCode.length());
+                        HashMap<String, String> map = new HashMap<String, String>();
+                        Elements trs = table.select("tr");
+                        Elements td = trs.select("td");
+                        countryCode = td.get(1).text();
+                        int size = countryCode.length();
+                        StringBuffer sb = new StringBuffer(countryCode);
+                        sb.delete(countryCode.length() - 1, countryCode.length());
 
-                    while(sb.length()!= 2){
-                        sb.delete(0, 1);
-                    }
+                        while (sb.length() != 2) {
+                            sb.delete(0, 1);
+                        }
 
-                    System.out.println(sb);
-                    String cCode = sb.toString();
+                        System.out.println(sb);
+                        String cCode = sb.toString();
 
-                    String imgUrl = srcBuilder(cCode);
-                    System.out.println(imgUrl);
+                        String imgUrl = srcBuilder(cCode);
+                        System.out.println(imgUrl);
 
-                    map.put("rank", td.get(1).text());
-                    map.put("flag", imgUrl);
+                        map.put("rank", td.get(1).text());
+                        map.put("flag", imgUrl);
 
-                    tdList.add(map);
+                        tdList.add(map);
 
-                    // Identify all the table row's(tr)
+                        // Identify all the table row's(tr)
 /*
                     for (Element row : table.select("tr")) {
                         //HashMap<String, String> map = new HashMap<String, String>();
@@ -230,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
                         arraylist.add(map);
                     }
 */
-                }
+                    }
 
                 }
             } catch (IOException e) {
@@ -255,9 +253,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-
     }
-
 
 
 }
