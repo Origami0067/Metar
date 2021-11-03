@@ -83,10 +83,10 @@ public class ListViewAdapter extends BaseAdapter {
 
                 Toast toast = Toast.makeText(context, oaci, Toast.LENGTH_SHORT);
                 toast.show();
-                Intent intent = new Intent(context, Results.class);
+                Intent resultIntent = new Intent(context, Results.class);
                 // Pass all data rank
-                intent.putExtra("flag", resultp.get(MainActivity.FLAG));
-                intent.putExtra("code", oaci);
+                resultIntent.putExtra("flag", resultp.get(MainActivity.FLAG));
+                resultIntent.putExtra("code", oaci);
                 // Pass all data country
                 /*intent.putExtra("country", resultp.get(MainActivity.COUNTRY));
                 // Pass all data population
@@ -94,7 +94,7 @@ public class ListViewAdapter extends BaseAdapter {
                 // Pass all data flag
                 intent.putExtra("flag", resultp.get(MainActivity.FLAG));*/
                 //Start SingleItemView Class
-                context.startActivity(intent);
+                context.startActivity(resultIntent);
 
             }
         });

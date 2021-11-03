@@ -8,16 +8,30 @@
 
 
 
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewSliders"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/layoutMT" />
+        android:layout_below="@id/layoutMT" >
 
+
+    </androidx.viewpager2.widget.ViewPager2>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingBtn"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="25dp"
+        android:clickable="true"
+        app:srcCompat="@android:drawable/ic_dialog_map" />
 
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/layoutMT"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/layoutMT"/>
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

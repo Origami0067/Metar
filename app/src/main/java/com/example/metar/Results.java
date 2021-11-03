@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TableLayout;
 
 
@@ -14,6 +16,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.IOException;
@@ -26,7 +29,9 @@ public class Results extends AppCompatActivity {
     TabLayout layoutMT;
     ViewPager2 viewSliders;
     FragmentAdapter adapter;
+    FloatingActionButton map;
 
+    Context context;
 
 
     @Override
@@ -52,6 +57,7 @@ public class Results extends AppCompatActivity {
 
         layoutMT=findViewById(R.id.layoutMT);
         viewSliders=findViewById(R.id.viewSliders);
+        map=findViewById(R.id.floatingBtn);
 
         FragmentManager fm = getSupportFragmentManager();
         adapter = new FragmentAdapter(fm, getLifecycle());
@@ -83,6 +89,17 @@ public class Results extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 layoutMT.selectTab(layoutMT.getTabAt(position));
+            }
+        });
+
+        map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapIntent = new Intent(Results.this, MapAirports.class);
+                mapIntent.putExtra("oaci",codeOACI);
+
+                System.out.println("click btnMap : " + map);
+                startActivity(mapIntent);
             }
         });
 
