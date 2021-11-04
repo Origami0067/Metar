@@ -19,7 +19,9 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:ems="10"
-            android:hint="@string/hintSearch" />
+            android:hint="@string/hintSearch"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz,"/>
+            />
 
         <Button
             android:id="@+id/getBtn"
