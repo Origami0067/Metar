@@ -13,11 +13,11 @@ import com.example.metar.R;
 
 public class Taf extends Fragment {
 
-    private static String code;
-    private TextView resultat;
+    private static String resultat;
+    private TextView textView;
 
-    public Taf(String code) {
-        this.code=code;
+    public Taf(String resultat) {
+        this.resultat = resultat;
     }
 
 
@@ -33,8 +33,8 @@ public class Taf extends Fragment {
             // Inflate the layout for this fragment
 
             View v = inflater.inflate(R.layout.fragment_taf, container, false);
-            resultat = (TextView)v.findViewById(R.id.textview);
-            resultat.setText(code);
+            textView = (TextView)v.findViewById(R.id.textview);
+            textView.setText(resultat);
             System.out.println("Taf onCreateView");
             return v;
     }

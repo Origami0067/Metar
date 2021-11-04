@@ -62,7 +62,6 @@ public class MapAirports extends FragmentActivity implements OnMapReadyCallback 
             System.out.println("oaci trycatch : "+oaci);
             addressList = geocoder.getFromLocationName(oaci, 1);
         }catch (Exception e){
-            System.out.println("ERROR PRINT");
             e.printStackTrace();
         }
         Address address = addressList.get(0);

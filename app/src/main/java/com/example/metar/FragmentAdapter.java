@@ -55,35 +55,6 @@ public class FragmentAdapter extends FragmentStateAdapter {
     }
 
 
-    private void getSiteWeb() {
-        //In the getSiteWeb() method, we create a new Thread to download the content of the website
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final StringBuilder builder = new StringBuilder();
-                ArrayList<String> tables = new ArrayList<String>();
-
-                try{
-                    String url = "https://www.aviationweather.gov/metar/data?ids="+code+"&format=decoded&hours=0&taf=on&layout=off";
-                    System.out.println(url);
-                    Document doc = Jsoup.connect(url).get();//url
-                    String title = doc.title();
-                    System.out.println(title);
-                    for (Element div : doc.select("div[id=awc_main_content_wrap]")) {
-
-                        for (Element table : div.select("table")) {
-                            tables.add(table.text());
-                        }
-                    }
-                    metar=tables.get(0);
-                    taf=tables.get(1);
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
 
 
 }

@@ -153,19 +153,27 @@ public class Results extends AppCompatActivity {
 
             try{
                 System.out.println(url);
-                Document doc = Jsoup.connect(url).get();//url
-                String title = doc.title();
+                Document docMT = Jsoup.connect(url).get();//url
+                String title = docMT.title();
                 System.out.println(title);
-                for (Element div : doc.select("div[id=awc_main_content_wrap]")) {
 
+                String resultat="";
+                for (Element div : docMT.select("div[id=awc_main_content_wrap]")) {
                     for (Element table : div.select("table")) {
-                        metartaf.add(table.text());
+                        resultat="";
+                        for (Element trs : table.select("tr")) {
+                            resultat+=trs.text();
+                            resultat+="\n";
+                        }
+                        System.out.println("Resultat : "+ resultat);
+                        metartaf.add(resultat);
                     }
                 }
             }
             catch (IOException e) {
                 e.printStackTrace();
             }
+
 
             return null;
         }
