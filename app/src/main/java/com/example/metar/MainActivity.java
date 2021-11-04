@@ -103,10 +103,6 @@ public class MainActivity extends AppCompatActivity {
                 if (!codeOACI.getText().toString().equals("")) { //to be sure there's at least one code
                     getSiteWeb();
                     new JsoupListView().execute();
-                    String[] OACIs = codeOACI.getText().toString().split(",");
-                    for (int i = 0; i < OACIs.length; i++) {
-                        //items.add(OACIs[i]);
-                    }
                 } else {
                     CharSequence text = getResources().getString(R.string.emptyField);
                     Toast toast = Toast.makeText(context, text, duration);
@@ -128,9 +124,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     url = uriBuilder(code);
                     System.out.println(url);
-                    Document doc = Jsoup.connect(url).get();//url
-                    String title = doc.title();
-                } catch (IOException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
 

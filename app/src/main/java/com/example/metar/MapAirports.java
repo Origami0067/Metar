@@ -56,13 +56,13 @@ public class MapAirports extends FragmentActivity implements OnMapReadyCallback 
         mMap = googleMap;
         System.out.println("map ready : " + mMap.getMapType());
 
-        // Add a marker in Sydney and move the camera
-
         List<Address> addressList = null;
         Geocoder geocoder = new Geocoder(MapAirports.this);
         try {
+            System.out.println("oaci trycatch : "+oaci);
             addressList = geocoder.getFromLocationName(oaci, 1);
         }catch (Exception e){
+            System.out.println("ERROR PRINT");
             e.printStackTrace();
         }
         Address address = addressList.get(0);

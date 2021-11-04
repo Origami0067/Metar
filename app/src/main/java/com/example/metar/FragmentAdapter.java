@@ -1,5 +1,10 @@
 package com.example.metar;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
+import android.widget.ListView;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -23,10 +28,14 @@ public class FragmentAdapter extends FragmentStateAdapter {
     String code;
     String metar;
     String taf;
-    public FragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, String code) {
+
+    ArrayList<String> liste;
+
+    public FragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, String code, ArrayList<String> liste) {
         super(fragmentManager, lifecycle);
         this.code=code;
-        getSiteWeb();
+        this.metar=liste.get(0);
+        this.taf=liste.get(1);
     }
 
     @NonNull
@@ -75,4 +84,6 @@ public class FragmentAdapter extends FragmentStateAdapter {
             }
         }).start();
     }
+
+
 }
