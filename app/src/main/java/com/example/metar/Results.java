@@ -154,13 +154,19 @@ public class Results extends AppCompatActivity {
             try{
                 System.out.println(url);
                 Document doc = Jsoup.connect(url).get();//url
+                Document docInfo = Jsoup.connect("https://ourairports.com/airports/"+codeOACI+"/").get();
                 String title = doc.title();
                 System.out.println(title);
                 for (Element div : doc.select("div[id=awc_main_content_wrap]")) {
 
                     for (Element table : div.select("table")) {
+
                         metartaf.add(table.text());
                     }
+                }
+
+                for(Element tables : docInfo.select("table[class=small table table-stripped]")){
+                    metartaf.add(tables.text());
                 }
             }
             catch (IOException e) {
