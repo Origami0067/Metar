@@ -155,6 +155,7 @@ public class Results extends AppCompatActivity {
                 System.out.println(url);
                 Document docMT = Jsoup.connect(url).get();//url
                 String title = docMT.title();
+                Document docInfo = Jsoup.connect("https://ourairports.com/airports/"+codeOACI+"/").get();
                 System.out.println(title);
 
                 String resultat="";
@@ -168,6 +169,10 @@ public class Results extends AppCompatActivity {
                         System.out.println("Resultat : "+ resultat);
                         metartaf.add(resultat);
                     }
+                }
+
+                for(Element tables : docInfo.select("table[class=small table table-stripped]")){
+                    metartaf.add(tables.text());
                 }
             }
             catch (IOException e) {

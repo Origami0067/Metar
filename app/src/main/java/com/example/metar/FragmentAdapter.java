@@ -28,14 +28,17 @@ public class FragmentAdapter extends FragmentStateAdapter {
     String code;
     String metar;
     String taf;
+    String info;
 
     ArrayList<String> liste;
+
 
     public FragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, String code, ArrayList<String> liste) {
         super(fragmentManager, lifecycle);
         this.code=code;
         this.metar=liste.get(0);
         this.taf=liste.get(1);
+        this.info=liste.get(2);
     }
 
     @NonNull
@@ -43,7 +46,7 @@ public class FragmentAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         switch (position){
             case 1: return new Taf(taf);
-            case 2: return new AirportInfos();
+            case 2: return new AirportInfos(info);
         }
         System.out.println(metar);
         return new Metar(metar);
@@ -53,8 +56,5 @@ public class FragmentAdapter extends FragmentStateAdapter {
     public int getItemCount() {
         return 3;
     }
-
-
-
 
 }
