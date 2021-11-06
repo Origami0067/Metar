@@ -149,14 +149,12 @@ public class Results extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... voids) {
             // Create an array
-            String url="https://www.aviationweather.gov/metar/data?ids="+codeOACI+"&format=decoded&hours=0&taf=on&layout=off";
+            String urlMT="https://www.aviationweather.gov/metar/data?ids="+codeOACI+"&format=decoded&hours=0&taf=on&layout=off";
+            String urlI="https://ourairports.com/airports/"+codeOACI+"/";
 
             try{
-                System.out.println(url);
-                Document docMT = Jsoup.connect(url).get();//url
-                String title = docMT.title();
-                Document docInfo = Jsoup.connect("https://ourairports.com/airports/"+codeOACI+"/").get();
-                System.out.println(title);
+                Document docMT = Jsoup.connect(urlMT).get();//url
+                Document docInfo = Jsoup.connect(urlI).get();
 
                 String resultat="";
                 for (Element div : docMT.select("div[id=awc_main_content_wrap]")) {
@@ -171,9 +169,19 @@ public class Results extends AppCompatActivity {
                     }
                 }
 
-                for(Element tables : docInfo.select("table[class=small table table-stripped]")){
-                    metartaf.add(tables.text());
+                System.out.println("Infos récups : " + docInfo.select("table[class=small table table-stripped]").text());
+                Elements tbody = docInfo.select("aside[id=data]").select("section").select("table").select("tbody");
+                resultat="";
+                for (Element trs : tbody.select("tr")){
+                    resultat+=trs.select("th").text();
+                    resultat+=" : \n";
+                    resultat+=trs.select("td").text();
+                    resultat+="\n\n";
                 }
+
+                System.out.println("Resultat infos : "+resultat);
+                metartaf.add(resultat);
+
             }
             catch (IOException e) {
                 e.printStackTrace();
