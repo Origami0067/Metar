@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Main -->
-    <string name="emptyField">Entrez au moins un code OACI</string>
+    <string name="emptyField">Entrez au moins un code OACI.</string>
     <string name="loadingMain">Chargement</string>
     <string name="no_data_found">Aucune donnée trouvée pour certain codes, verifiez votre recherche.</string>
     <!-- Activity Main -->

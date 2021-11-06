@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name" translatable="false">TarTaf</string>
     <!-- Main -->
-    <string name="emptyField">Please enter at least one ICAO</string>
+    <string name="emptyField">Please enter at least one ICAO code.</string>
     <string name="loadingMain">Loading</string>
-    <string name="no_data_found">No data found for at least one ICAO, please review your entry.</string>
+    <string name="no_data_found">No data found for at least one code, please review your entry.</string>
     <!-- Activity Main -->
     <string name="btnShow">Show data</string>
     <string name="hintSearch">Enter ICAO codes separated by commas</string>
