@@ -13,9 +13,12 @@
         <entry key="..\:/ENSIM/5A/Metar/app/src/main/res/layout/listview_item.xml" value="0.4" />
         <entry key="..\:/ENSIM/5A/Metar/app/src/main/res/layout/listview_main.xml" value="0.3177083333333333" />
         <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
+        <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/activity_map_airports.xml" value="0.12613981762917933" />
         <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/fragment_airport_infos.xml" value="0.13385416666666666" />
-        <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/fragment_metar.xml" value="0.13385416666666666" />
-        <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/fragment_taf.xml" value="0.13385416666666666" />
+        <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/fragment_metar.xml" value="0.1" />
+        <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/fragment_taf.xml" value="0.1" />
+        <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/listview_item.xml" value="0.11203703703703703" />
+        <entry key="..\:/Users/anima/Desktop/Ecole/Android/Projet/Metar/app/src/main/res/layout/listview_main.xml" value="0.12613981762917933" />
       </map>
     </option>
   </component>

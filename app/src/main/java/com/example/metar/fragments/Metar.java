@@ -33,7 +33,7 @@ public class Metar extends Fragment {
         // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_metar, container, false);
-        textView = (TextView)v.findViewById(R.id.textview);
+        textView = v.findViewById(R.id.textview);
         textView.setText(resultat);
         System.out.println("Metar onCreateView");
         return v;

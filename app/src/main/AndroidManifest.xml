@@ -33,10 +33,11 @@
         <activity
             android:name=".MapAirports"
             android:exported="false"
-            android:label="@string/title_activity_map_airports" />
+            android:label="MapAirports" />
         <activity
             android:name=".Results"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Results" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

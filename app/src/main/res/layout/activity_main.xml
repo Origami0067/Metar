@@ -39,7 +39,7 @@
             android:layout_below="@id/getBtn"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
-            android:text="Resultat"
+            android:text="@string/resultsSearch"
             android:textSize="17sp" />
 
         <ListView

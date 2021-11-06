@@ -31,7 +31,6 @@ public class MapAirports extends FragmentActivity implements OnMapReadyCallback 
         Intent intent = getIntent();
         oaci = intent.getStringExtra("oaci");
 
-        System.out.println("onCreate Instance map");
 
         binding = ActivityMapAirportsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -54,12 +53,10 @@ public class MapAirports extends FragmentActivity implements OnMapReadyCallback 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        System.out.println("map ready : " + mMap.getMapType());
 
         List<Address> addressList = null;
         Geocoder geocoder = new Geocoder(MapAirports.this);
         try {
-            System.out.println("oaci trycatch : "+oaci);
             addressList = geocoder.getFromLocationName(oaci, 1);
         }catch (Exception e){
             e.printStackTrace();

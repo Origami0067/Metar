@@ -4,23 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.squareup.picasso.Picasso;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -28,11 +21,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -48,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     static String FLAG = "flag";
 
 
-    private Button getBtn;
+    boolean noData=false;
     private TextView resultat;
     private EditText codeOACI;
     private String code;
@@ -69,8 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 .appendQueryParameter("date", "")
                 .appendQueryParameter("hours", "0")
                 .appendQueryParameter("taf", "false");
-        String myUrl = builder.build().toString();
-        return myUrl;
+        return builder.build().toString();
     }
 
     private String srcBuilder(String countryCode) {
@@ -80,8 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 .appendPath("country-flag-icons")
                 .appendPath("3x2")
                 .appendPath(countryCode + ".svg");
-        String myUrl = builder.build().toString();
-        return myUrl;
+        return builder.build().toString();
     }
 
     @Override
@@ -90,16 +76,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //get instances of the Button and the TextView from our layout
-        resultat = (TextView) findViewById(R.id.resultat);
-        codeOACI = (EditText) findViewById(R.id.codeOACI);
-        getBtn = (Button) findViewById(R.id.getBtn);
+        resultat = findViewById(R.id.resultat);
+        codeOACI = findViewById(R.id.codeOACI);
+        Button getBtn = findViewById(R.id.getBtn);
 
 
         //set a click listener on the Button to start the download of the website when the user will click it
         getBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("CODE OACI : " + codeOACI.getText().toString());
                 if (!codeOACI.getText().toString().equals("")) { //to be sure there's at least one code
                     getSiteWeb();
                     new JsoupListView().execute();
@@ -120,10 +105,8 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 final StringBuilder builder = new StringBuilder();
                 code = String.valueOf(codeOACI.getText());
-
                 try {
                     url = uriBuilder(code);
-                    System.out.println(url);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -150,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
             super.onPreExecute();
             // Set progressdialog title
             // Set progressdialog message
-            mProgressDialog.setMessage(getResources().getString(R.string.loadingRessources));
+            mProgressDialog.setMessage(getResources().getString(R.string.loadingMain));
             mProgressDialog.setIndeterminate(false);
             // Show progressdialog
             mProgressDialog.show();
@@ -174,13 +157,10 @@ public class MainActivity extends AppCompatActivity {
                     for (Element table : div.select("table")) {
 
                         HashMap<String, String> map = new HashMap<String, String>();
-                        Elements trs = table.select("tr");
-                        Elements td = trs.select("td");
+                        Elements td = table.select("tr").select("td");
                         countryCode = td.get(1).text();
-                        int size = countryCode.length();
                         StringBuffer sb = new StringBuffer(countryCode);
                         sb.delete(countryCode.length() - 1, countryCode.length());
-
                         while (sb.length() != 2) {
                             sb.delete(0, 1);
                         }
@@ -194,7 +174,11 @@ public class MainActivity extends AppCompatActivity {
                         map.put("rank", td.get(1).text());
                         map.put("flag", imgUrl);
 
-                        tdList.add(map);
+                        if (!td.get(3).text().equals("No data found")) {
+                            tdList.add(map);
+                        }else{
+                            noData=true;
+                        }
 
                         // Identify all the table row's(tr)
 /*
@@ -235,8 +219,14 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
+            if(noData) {
+                CharSequence text = getResources().getString(R.string.no_data_found);
+                Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
+                toast.show();
+            }
+            noData=false;
             // Locate the listview in listview_main.xml
-            listview = (ListView) findViewById(R.id.listview);
+            listview = findViewById(R.id.listview);
             // Pass the results into ListViewAdapter.java
             adapter = new ListViewAdapter(MainActivity.this, tdList);
             // Set the adapter to the ListView

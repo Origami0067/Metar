@@ -103,7 +103,6 @@ public class Results extends AppCompatActivity {
                 Intent mapIntent = new Intent(Results.this, MapAirports.class);
                 mapIntent.putExtra("oaci",codeOACI);
 
-                System.out.println("click oaci : " + codeOACI);
                 startActivity(mapIntent);
             }
         });
@@ -139,7 +138,7 @@ public class Results extends AppCompatActivity {
             super.onPreExecute();
             // Set progressdialog title
             // Set progressdialog message
-            mProgressDialog.setMessage("Loading");
+            mProgressDialog.setMessage(getResources().getString(R.string.loadingResult));
             mProgressDialog.setIndeterminate(false);
             // Show progressdialog
             mProgressDialog.show();
@@ -164,7 +163,6 @@ public class Results extends AppCompatActivity {
                             resultat+=trs.text();
                             resultat+="\n";
                         }
-                        System.out.println("Resultat : "+ resultat);
                         metartaf.add(resultat);
                     }
                 }
@@ -179,7 +177,6 @@ public class Results extends AppCompatActivity {
                     resultat+="\n\n";
                 }
 
-                System.out.println("Resultat infos : "+resultat);
                 metartaf.add(resultat);
 
             }
@@ -199,15 +196,14 @@ public class Results extends AppCompatActivity {
             adapter = new FragmentAdapter(fm, getLifecycle(), codeOACI, metartaf);
             viewSliders.setAdapter(adapter);
 
-            layoutMT.addTab(layoutMT.newTab().setText("Metar"));
-            layoutMT.addTab(layoutMT.newTab().setText("Taf"));
-            layoutMT.addTab(layoutMT.newTab().setText("Infos"));
+            layoutMT.addTab(layoutMT.newTab().setText(getResources().getString(R.string.FragNameMetar)));
+            layoutMT.addTab(layoutMT.newTab().setText(getResources().getString(R.string.FragNameTaf)));
+            layoutMT.addTab(layoutMT.newTab().setText(getResources().getString(R.string.FragNameInfo)));
 
             layoutMT.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
                 public void onTabSelected(TabLayout.Tab tab) {
                     viewSliders.setCurrentItem(tab.getPosition());
-                    System.out.println("getPosition() "+tab.getPosition());
                 }
 
                 @Override

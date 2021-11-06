@@ -77,8 +77,6 @@ public class ListViewAdapter extends BaseAdapter {
                 // Get the position
                 resultp = data.get(position);
 
-                System.out.println("resultp : \n"+resultp+"\n");
-                System.out.println("resultp rank : \n"+resultp.get("rank")+"\n");
                 String oaci=resultp.get("rank").toString().substring(0,4);
 
                 Toast toast = Toast.makeText(context, oaci, Toast.LENGTH_SHORT);

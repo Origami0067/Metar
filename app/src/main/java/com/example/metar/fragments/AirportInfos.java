@@ -34,7 +34,7 @@ public class AirportInfos extends Fragment {
         // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_airport_infos, container, false);
-        resultat = (TextView)v.findViewById(R.id.textview);
+        resultat = v.findViewById(R.id.textview);
         resultat.setText(code);
         System.out.println("Info onCreateView");
         return v;

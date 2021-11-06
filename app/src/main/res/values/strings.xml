@@ -1,10 +1,16 @@
 <resources>
-    <string name="app_name">TarTaf</string>
+    <string name="app_name" translatable="false">TarTaf</string>
+    <!-- Main -->
+    <string name="emptyField">Please enter at least one ICAO</string>
+    <string name="loadingMain">Loading</string>
+    <string name="no_data_found">No data found for at least one ICAO, please review your entry.</string>
+    <!-- Activity Main -->
     <string name="btnShow">Show data</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hintSearch">Enter OACI codes separated by commas</string>
-    <string name="loadingRessources">Loading</string>
-    <string name="emptyField">Please enter at least one code</string>
-    <string name="title_activity_map_airports">MapAirports</string>
-
+    <string name="hintSearch">Enter ICAO codes separated by commas</string>
+    <string name="resultsSearch">No result</string>
+    <!-- Results -->
+    <string name="loadingResult">Loading</string>
+    <string name="FragNameMetar">Metar</string>
+    <string name="FragNameTaf">Taf</string>
+    <string name="FragNameInfo">Infos</string>
 </resources>
