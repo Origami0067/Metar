@@ -3,15 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/moon"
     tools:context=".fragments.Taf">
+
 
     <TextView
         android:id="@+id/textview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="20dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="#F8F6F6"
+        android:fontFamily="@font/armata"
+        android:lineSpacingExtra="10dp"/>
 
 </ScrollView>

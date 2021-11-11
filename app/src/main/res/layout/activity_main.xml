@@ -6,11 +6,24 @@
     android:fillViewport="true"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="16dp"
         tools:context=".MainActivity">
+
+        <VideoView
+            android:id="@+id/videoView"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="1000dp"
+            android:layout_height="fill_parent"/>
+
 
         <EditText
             android:id="@+id/codeOACI"
@@ -19,6 +32,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
             android:ems="10"
+            android:textColor="#FBF8F8"
+            android:fontFamily="@font/armata"
             android:hint="@string/hintSearch"
             android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz,"/>
             />
@@ -39,6 +54,7 @@
             android:layout_below="@id/getBtn"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
+            android:fontFamily="@font/armata"
             android:text="@string/resultsSearch"
             android:textSize="17sp" />
 

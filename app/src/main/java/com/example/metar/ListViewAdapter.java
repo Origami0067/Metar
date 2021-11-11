@@ -18,7 +18,7 @@ public class ListViewAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
     ArrayList<HashMap<String, String>> data;
-    ImageLoader imageLoader;
+    //ImageLoader imageLoader;
     HashMap<String, String> resultp = new HashMap<String, String>();
 
 
@@ -26,7 +26,7 @@ public class ListViewAdapter extends BaseAdapter {
                            ArrayList<HashMap<String, String>> arraylist) {
         this.context = context;
         data = arraylist;
-        imageLoader = new ImageLoader(context);
+        //imageLoader = new ImageLoader(context);
 
     }
 
@@ -60,13 +60,13 @@ public class ListViewAdapter extends BaseAdapter {
         resultp = data.get(position);
 
         // Locate the ImageView in listview_item.xml
-        flag = (ImageView) itemView.findViewById(R.id.flag);
+        //flag = (ImageView) itemView.findViewById(R.id.flag);
         // Locate the TextViews in listview_item.xml
         rank = (TextView) itemView.findViewById(R.id.rank);
 
         // Capture position and set results to the ImageView
         // Passes flag images URL into ImageLoader.class
-        imageLoader.DisplayImage(resultp.get(MainActivity.FLAG), flag);
+        //imageLoader.DisplayImage(resultp.get(MainActivity.FLAG), flag);
         // Capture position and set results to the TextViews
         rank.setText(resultp.get(MainActivity.RANK));
         // Capture ListView item click
@@ -83,7 +83,7 @@ public class ListViewAdapter extends BaseAdapter {
                 toast.show();
                 Intent resultIntent = new Intent(context, Results.class);
                 // Pass all data rank
-                resultIntent.putExtra("flag", resultp.get(MainActivity.FLAG));
+                //resultIntent.putExtra("flag", resultp.get(MainActivity.FLAG));
                 resultIntent.putExtra("code", oaci);
                 // Pass all data country
                 /*intent.putExtra("country", resultp.get(MainActivity.COUNTRY));

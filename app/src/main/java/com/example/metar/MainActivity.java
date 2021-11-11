@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -29,11 +31,17 @@ public class MainActivity extends AppCompatActivity {
 
     ListView listview;
     ListAdapter adapter;
-    int drapeau[] = {R.drawable.fr};
+    //int drapeau[] = {R.drawable.fr};
     ArrayList<String> items;
     ArrayList<HashMap<String, String>> tdList;
     static String RANK = "rank";
-    static String FLAG = "flag";
+    //static String FLAG = "flag";
+
+    private VideoView videoBG;
+    MediaPlayer mMediaPlayer;
+    int mCurrentVideoPosition;
+    public static String PACKAGE_NAME;
+    String path="android.resource://com.example.metar.fragments/"+R.raw.claim;
 
 
     boolean noData=false;
@@ -80,6 +88,36 @@ public class MainActivity extends AppCompatActivity {
         codeOACI = findViewById(R.id.codeOACI);
         Button getBtn = findViewById(R.id.getBtn);
 
+        videoBG = (VideoView) findViewById(R.id.videoView);
+
+        // Build your video Uri
+        Uri uri = Uri.parse("android.resource://" // First start with this,
+                + getPackageName() // then retrieve your package name,
+                + "/" // add a slash,
+                + R.raw.baggage); // and then finally add your video resource. Make sure it is stored
+        // in the raw folder.
+
+        // Set the new Uri to our VideoView
+        videoBG.setVideoURI(uri);
+        // Start the VideoView
+        videoBG.start();
+
+        // Set an OnPreparedListener for our VideoView. For more information about VideoViews,
+        // check out the Android Docs: https://developer.android.com/reference/android/widget/VideoView.html
+        videoBG.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mediaPlayer) {
+                mMediaPlayer = mediaPlayer;
+                // We want our video to play over and over so we set looping to true.
+                mMediaPlayer.setLooping(true);
+                // We then seek to the current posistion if it has been set and play the video.
+                if (mCurrentVideoPosition != 0) {
+                    mMediaPlayer.seekTo(mCurrentVideoPosition);
+                    mMediaPlayer.start();
+                }
+            }
+        });
+
 
         //set a click listener on the Button to start the download of the website when the user will click it
         getBtn.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +133,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Capture the current video position and pause the video.
+        mCurrentVideoPosition = mMediaPlayer.getCurrentPosition();
+        videoBG.pause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Restart the video when resuming the Activity
+        videoBG.start();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // When the Activity is destroyed, release our MediaPlayer and set it to null.
+        mMediaPlayer.release();
+        mMediaPlayer = null;
     }
 
 
@@ -168,11 +229,11 @@ public class MainActivity extends AppCompatActivity {
                         System.out.println(sb);
                         String cCode = sb.toString();
 
-                        String imgUrl = srcBuilder(cCode);
+                        /*String imgUrl = srcBuilder(cCode);
                         System.out.println(imgUrl);
-
+*/
                         map.put("rank", td.get(1).text());
-                        map.put("flag", imgUrl);
+                        //map.put("flag", imgUrl);
 
                         if (!td.get(3).text().equals("No data found")) {
                             tdList.add(map);
