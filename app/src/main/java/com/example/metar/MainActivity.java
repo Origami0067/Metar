@@ -31,24 +31,18 @@ public class MainActivity extends AppCompatActivity {
 
     ListView listview;
     ListAdapter adapter;
-    //int drapeau[] = {R.drawable.fr};
-    ArrayList<String> items;
     ArrayList<HashMap<String, String>> tdList;
     static String RANK = "rank";
-    //static String FLAG = "flag";
 
     private VideoView videoBG;
     MediaPlayer mMediaPlayer;
     int mCurrentVideoPosition;
-    public static String PACKAGE_NAME;
     String path="android.resource://com.example.metar.fragments/"+R.raw.claim;
 
 
-    boolean noData=false;
     private TextView resultat;
     private EditText codeOACI;
     private String code;
-    private String countryCode;
 
     public String url;
     Context context = this;
@@ -187,6 +181,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Create a progressdialog
         ProgressDialog mProgressDialog = new ProgressDialog(MainActivity.this);
+        boolean noData=false;
+        ArrayList<String> noDataCodes= new ArrayList<>();
+
 
 
         @Override
@@ -219,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
 
                         HashMap<String, String> map = new HashMap<String, String>();
                         Elements td = table.select("tr").select("td");
-                        countryCode = td.get(1).text();
+                        String countryCode = td.get(1).text();
                         StringBuffer sb = new StringBuffer(countryCode);
                         sb.delete(countryCode.length() - 1, countryCode.length());
                         while (sb.length() != 2) {
@@ -239,6 +236,7 @@ public class MainActivity extends AppCompatActivity {
                             tdList.add(map);
                         }else{
                             noData=true;
+                            noDataCodes.add(td.get(1).text());
                         }
 
                         // Identify all the table row's(tr)
@@ -281,7 +279,11 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             if(noData) {
-                CharSequence text = getResources().getString(R.string.no_data_found);
+                String unknowCodes = "";
+                for (String unknowCode : noDataCodes) {
+                    unknowCodes+=unknowCode+"\n";
+                }
+                CharSequence text = getResources().getString(R.string.no_data_found)+"\n"+unknowCodes;
                 Toast toast = Toast.makeText(context, text, Toast.LENGTH_LONG);
                 toast.show();
             }

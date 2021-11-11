@@ -3,7 +3,7 @@
     <!-- Main -->
     <string name="emptyField">Entrez au moins un code OACI.</string>
     <string name="loadingMain">Chargement</string>
-    <string name="no_data_found">Aucune donnée trouvée pour certain codes, verifiez votre recherche.</string>
+    <string name="no_data_found">Aucune donnée trouvée pour :</string>
     <!-- Activity Main -->
     <string name="btnShow">Rechercher</string>
     <string name="hintSearch">Entrez les codes OACI séparés par des virgules</string>

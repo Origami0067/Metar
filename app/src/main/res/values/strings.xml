@@ -3,7 +3,7 @@
     <!-- Main -->
     <string name="emptyField">Please enter at least one ICAO code.</string>
     <string name="loadingMain">Loading</string>
-    <string name="no_data_found">No data found for at least one code, please review your entry.</string>
+    <string name="no_data_found">No data found for :</string>
     <!-- Activity Main -->
     <string name="btnShow">Show data</string>
     <string name="hintSearch">Enter ICAO codes separated by commas</string>

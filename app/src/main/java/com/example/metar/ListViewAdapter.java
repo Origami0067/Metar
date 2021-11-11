@@ -18,7 +18,6 @@ public class ListViewAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
     ArrayList<HashMap<String, String>> data;
-    //ImageLoader imageLoader;
     HashMap<String, String> resultp = new HashMap<String, String>();
 
 
@@ -26,7 +25,6 @@ public class ListViewAdapter extends BaseAdapter {
                            ArrayList<HashMap<String, String>> arraylist) {
         this.context = context;
         data = arraylist;
-        //imageLoader = new ImageLoader(context);
 
     }
 
@@ -50,7 +48,6 @@ public class ListViewAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         // Declare Variables
         TextView rank;
-        ImageView flag;
 
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -58,15 +55,9 @@ public class ListViewAdapter extends BaseAdapter {
         View itemView = inflater.inflate(R.layout.listview_item, parent, false);
         // Get the position
         resultp = data.get(position);
-
-        // Locate the ImageView in listview_item.xml
-        //flag = (ImageView) itemView.findViewById(R.id.flag);
         // Locate the TextViews in listview_item.xml
         rank = (TextView) itemView.findViewById(R.id.rank);
 
-        // Capture position and set results to the ImageView
-        // Passes flag images URL into ImageLoader.class
-        //imageLoader.DisplayImage(resultp.get(MainActivity.FLAG), flag);
         // Capture position and set results to the TextViews
         rank.setText(resultp.get(MainActivity.RANK));
         // Capture ListView item click
@@ -83,14 +74,7 @@ public class ListViewAdapter extends BaseAdapter {
                 toast.show();
                 Intent resultIntent = new Intent(context, Results.class);
                 // Pass all data rank
-                //resultIntent.putExtra("flag", resultp.get(MainActivity.FLAG));
                 resultIntent.putExtra("code", oaci);
-                // Pass all data country
-                /*intent.putExtra("country", resultp.get(MainActivity.COUNTRY));
-                // Pass all data population
-                intent.putExtra("population",resultp.get(MainActivity.POPULATION));
-                // Pass all data flag
-                intent.putExtra("flag", resultp.get(MainActivity.FLAG));*/
                 //Start SingleItemView Class
                 context.startActivity(resultIntent);
 
