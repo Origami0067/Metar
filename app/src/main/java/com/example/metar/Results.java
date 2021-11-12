@@ -5,12 +5,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TableLayout;
 
 
 import org.jsoup.Jsoup;
@@ -113,7 +111,6 @@ public class Results extends AppCompatActivity {
         // Create a progressdialog
         ProgressDialog mProgressDialog = new ProgressDialog(Results.this);
         MetarTafInfos mti=new MetarTafInfos();
-        ArrayList<String> metartaf = new ArrayList<String>();
 
 
         @Override
@@ -133,34 +130,25 @@ public class Results extends AppCompatActivity {
             String urlMT="https://www.aviationweather.gov/metar/data?ids="+codeOACI+"&format=decoded&hours=0&taf=on&layout=off";
             String urlI="https://ourairports.com/airports/"+codeOACI+"/";
             mti.setCode(codeOACI);
+            ArrayList<String> metartaf;
 
             try{
-                Document docMT = Jsoup.connect(urlMT).get();//url
+                Document docMT = Jsoup.connect(urlMT).get();
                 Document docInfo = Jsoup.connect(urlI).get();
 
-                String resultat="";
-                for (Element div : docMT.select("div[id=awc_main_content_wrap]")) {
-                    for (Element table : div.select("table")) {
-                        resultat="";
-                        for (Element trs : table.select("tr")) {
-                            resultat+=trs.text();
-                            resultat+="\n";
-                        }
-                        metartaf.add(resultat);
-                    }
-                }
+                metartaf= metartafGet(docMT);
                 mti.setMetar(metartaf.get(0));
                 mti.setTaf(metartaf.get(1));
 
                 Elements tbody = docInfo.select("aside[id=data]").select("section").select("table").select("tbody");
-                resultat="";
+                String resultat="";
+                resultat="\n";
                 for (Element trs : tbody.select("tr")){
                     resultat+=trs.select("th").text();
                     resultat+=" : \n";
                     resultat+=trs.select("td").text();
                     resultat+="\n\n";
                 }
-
                 mti.setInfos(resultat);
 
             }
@@ -208,9 +196,58 @@ public class Results extends AppCompatActivity {
                 }
             });
             mProgressDialog.dismiss();
+        }
+    }
 
+    public ArrayList<String> metartafGet(Document doc){
+        ArrayList<String> result = new ArrayList<String>();
+
+        StringBuilder resultat;
+        for (Element div : doc.select("div[id=awc_main_content_wrap]")) {
+            for (Element table : div.select("table")) {
+                resultat = new StringBuilder();
+                for (Element trs : table.select("tr")) {
+                    switch (trs.select("td").get(0).text()){
+
+                        case "Text:" :
+                            resultat.append("\n").append(trs.select("td").get(1).text()).append("\n");
+                            break;
+                        case "Temperature:" :
+                            resultat.append(getResources().getString(R.string.temperature)).append(trs.select("td").
+                                    get(1).text()).append("\n");break;
+                        case "Dewpoint:" :
+                            resultat.append(getResources().getString(R.string.Dewpoint)).append(trs.select("td").
+                                    get(1).text()).append("\n");break;
+                        case "Pressure (altimeter):" :
+                            resultat.append(getResources().getString(R.string.Pressure)).append(trs.select("td").
+                                    get(1).text()).append("\n");break;
+                        case "Winds:" :
+                            resultat.append(getResources().getString(R.string.Winds)).append(trs.select("td").
+                                    get(1).text()).append("\n");break;
+                        case "Visibility:" :
+                            resultat.append(getResources().getString(R.string.Visibility)).append(trs.select("td").
+                                    get(1).text()).append("\n");break;
+                        case "Ceiling:" :
+                            resultat.append(getResources().getString(R.string.Ceiling)).append(trs.select("td").
+                                    get(1).text()).append("\n");break;
+                        case "Clouds:" :
+                            resultat.append(getResources().getString(R.string.Clouds)).append(trs.select("td").
+                                    get(1).text()).append("\n");break;
+                        case "Weather:" :
+                            resultat.append(getResources().getString(R.string.Weather)).append(trs.select("td").
+                                    get(1).text()).append("\n");break;
+
+                        case "Forecast type:" :
+                        case "Forecast period:" :
+                            resultat.append(trs.select("td").
+                                    get(1).text()).append("\n");break;
+                    }
+                    System.out.println("td0 :"+trs.select("td").get(0).text());
+                }
+                result.add(resultat.toString());
+            }
         }
 
-
+        return result;
     }
 }

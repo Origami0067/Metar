@@ -13,5 +13,13 @@
     <string name="FragNameMetar">Metar</string>
     <string name="FragNameTaf">Taf</string>
     <string name="FragNameInfo">Infos</string>
+    <string name="Dewpoint">"Point de rosée : "</string>
+    <string name="temperature">"Temperature : "</string>
+    <string name="Pressure">"Pression : "</string>
+    <string name="Winds">"Vents : "</string>
+    <string name="Visibility">"Visibilité : "</string>
+    <string name="Ceiling">"Plafond : "</string>
+    <string name="Clouds">"Nuages : "</string>
+    <string name="Weather">"Temps : "</string>
 </resources>
 

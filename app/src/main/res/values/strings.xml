@@ -13,4 +13,12 @@
     <string name="FragNameMetar">Metar</string>
     <string name="FragNameTaf">Taf</string>
     <string name="FragNameInfo">Infos</string>
+    <string name="temperature">"Temperature : "</string>
+    <string name="Dewpoint">"Dewpoint : "</string>
+    <string name="Pressure">"Pressure : "</string>
+    <string name="Winds">"Winds : "</string>
+    <string name="Visibility">"Visibility : "</string>
+    <string name="Ceiling">"Ceiling : "</string>
+    <string name="Clouds">"Clouds : "</string>
+    <string name="Weather">"Weather : "</string>
 </resources>
