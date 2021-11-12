@@ -25,7 +25,7 @@ import java.util.ArrayList;
 public class Results extends AppCompatActivity {
 
 
-    public String codeOACI="no OACI code";
+    MetarTafInfos mti=new MetarTafInfos();
     TabLayout layoutMT;
     ViewPager2 viewSliders;
     FragmentAdapter adapter;
@@ -37,65 +37,20 @@ public class Results extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_results);
 
-
-
         Intent intent = getIntent();
-        codeOACI = intent.getStringExtra("code");
-
-
-        //GET SITE WEB
-        /*try {
-            Document doc = Jsoup.connect(url).get();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-        //getSiteWeb(url);
-        //GET SITE WEB
+        mti.setCode(intent.getStringExtra("code"));
 
         layoutMT=findViewById(R.id.layoutMT);
         viewSliders=findViewById(R.id.viewSliders);
         map=findViewById(R.id.floatingBtn);
 
-        new JsoupListView().execute();
-
-        /*FragmentManager fm = getSupportFragmentManager();
-        adapter = new FragmentAdapter(fm, getLifecycle(), this.codeOACI, metartaf);
-        viewSliders.setAdapter(adapter);
-
-        layoutMT.addTab(layoutMT.newTab().setText("Metar"));
-        layoutMT.addTab(layoutMT.newTab().setText("Taf"));
-        layoutMT.addTab(layoutMT.newTab().setText("Infos"));
-
-        layoutMT.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewSliders.setCurrentItem(tab.getPosition());
-                System.out.println("getPosition() "+tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        viewSliders.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                layoutMT.selectTab(layoutMT.getTabAt(position));
-            }
-        });*/
+        new JsoupGetInfos().execute();
 
         map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent mapIntent = new Intent(Results.this, MapAirports.class);
-                mapIntent.putExtra("oaci",codeOACI);
+                mapIntent.putExtra("oaci",mti.getCode());
 
                 startActivity(mapIntent);
             }
@@ -106,11 +61,10 @@ public class Results extends AppCompatActivity {
     public Results(){
     }
 
-    private class JsoupListView extends AsyncTask<Void, Void, Void> {
+    private class JsoupGetInfos extends AsyncTask<Void, Void, Void> {
 
         // Create a progressdialog
         ProgressDialog mProgressDialog = new ProgressDialog(Results.this);
-        MetarTafInfos mti=new MetarTafInfos();
 
 
         @Override
@@ -126,10 +80,8 @@ public class Results extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            // Create an array
-            String urlMT="https://www.aviationweather.gov/metar/data?ids="+codeOACI+"&format=decoded&hours=0&taf=on&layout=off";
-            String urlI="https://ourairports.com/airports/"+codeOACI+"/";
-            mti.setCode(codeOACI);
+            String urlMT="https://www.aviationweather.gov/metar/data?ids="+mti.getCode()+"&format=decoded&hours=0&taf=on&layout=off";
+            String urlI="https://ourairports.com/airports/"+mti.getCode()+"/";
             ArrayList<String> metartaf;
 
             try{
@@ -163,7 +115,7 @@ public class Results extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            // Close the progressdialog
+            // Fragments initializing
             FragmentManager fm = getSupportFragmentManager();
             adapter = new FragmentAdapter(fm, getLifecycle(), mti);
             viewSliders.setAdapter(adapter);
@@ -195,10 +147,12 @@ public class Results extends AppCompatActivity {
                     layoutMT.selectTab(layoutMT.getTabAt(position));
                 }
             });
+            // Close the progressdialog
             mProgressDialog.dismiss();
         }
     }
 
+    // Récupère et formate les metar et les tafs
     public ArrayList<String> metartafGet(Document doc){
         ArrayList<String> result = new ArrayList<String>();
 
@@ -242,7 +196,6 @@ public class Results extends AppCompatActivity {
                             resultat.append(trs.select("td").
                                     get(1).text()).append("\n");break;
                     }
-                    System.out.println("td0 :"+trs.select("td").get(0).text());
                 }
                 result.add(resultat.toString());
             }

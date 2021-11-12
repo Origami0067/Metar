@@ -6,9 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,34 +44,26 @@ public class ListViewAdapter extends BaseAdapter {
 
 
     public View getView(final int position, View convertView, ViewGroup parent) {
-        // Declare Variables
-        TextView rank;
+        TextView code;
 
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View itemView = inflater.inflate(R.layout.listview_item, parent, false);
-        // Get the position
         resultp = data.get(position);
-        // Locate the TextViews in listview_item.xml
-        rank = (TextView) itemView.findViewById(R.id.rank);
+        code = (TextView) itemView.findViewById(R.id.code);
 
-        // Capture position and set results to the TextViews
-        rank.setText(resultp.get(MainActivity.RANK));
-        // Capture ListView item click
+        code.setText(resultp.get("code"));
         itemView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                // Get the position
                 resultp = data.get(position);
 
-                String oaci=resultp.get("rank").toString().substring(0,4);
+                String oaci=resultp.get("code").toString().substring(0,4);
 
                 Intent resultIntent = new Intent(context, Results.class);
-                // Pass all data rank
                 resultIntent.putExtra("code", oaci);
-                //Start SingleItemView Class
                 context.startActivity(resultIntent);
 
             }

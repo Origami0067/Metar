@@ -16,8 +16,7 @@ import com.example.metar.R;
 
 public class Metar extends Fragment {
 
-    private static String resultat;
-    private TextView textView;
+    private final String resultat;
 
     public Metar(String resultat) {
         this.resultat = resultat;
@@ -27,7 +26,6 @@ public class Metar extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("Metar onCreate");
 
     }
 
@@ -35,16 +33,10 @@ public class Metar extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_metar, container, false);
-
-
-        textView = v.findViewById(R.id.textview);
+        TextView textView = v.findViewById(R.id.textview);
         textView.setText(resultat);
-
-
-        System.out.println("Metar onCreateView");
         return v;
 
     }

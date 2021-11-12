@@ -30,9 +30,6 @@ public class FragmentAdapter extends FragmentStateAdapter {
     String taf;
     String info;
 
-    ArrayList<String> liste;
-
-
     public FragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, MetarTafInfos mti) {
         super(fragmentManager, lifecycle);
         this.code=mti.getCode();
@@ -48,7 +45,6 @@ public class FragmentAdapter extends FragmentStateAdapter {
             case 1: return new Taf(taf);
             case 2: return new AirportInfos(info);
         }
-        System.out.println(metar);
         return new Metar(metar);
     }
 

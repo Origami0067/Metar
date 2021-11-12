@@ -14,29 +14,25 @@ import com.example.metar.R;
 
 public class AirportInfos extends Fragment {
 
-    private static String code;
-    private TextView resultat;
+    private final String resultat;
 
     public AirportInfos(String code) {
-        this.code=code;
+        this.resultat=code;
     }
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        System.out.println("Info onCreate");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_airport_infos, container, false);
-        resultat = v.findViewById(R.id.textview);
-        resultat.setText(code);
-        System.out.println("Info onCreateView");
+        TextView textView = v.findViewById(R.id.textview);
+        textView.setText(resultat);
         return v;
 
     }
