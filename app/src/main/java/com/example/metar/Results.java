@@ -28,14 +28,10 @@ public class Results extends AppCompatActivity {
 
 
     public String codeOACI="no OACI code";
-    public Document doc;
     TabLayout layoutMT;
     ViewPager2 viewSliders;
     FragmentAdapter adapter;
     FloatingActionButton map;
-
-    Context context;
-    ArrayList<String> metartaf = new ArrayList<String>();
 
 
     @Override
@@ -112,31 +108,17 @@ public class Results extends AppCompatActivity {
     public Results(){
     }
 
-    private void getSiteWeb(String url) {
-        //In the getSiteWeb() method, we create a new Thread to download the content of the website
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    doc = Jsoup.connect(url).get();//url
-                }
-                catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
-
     private class JsoupListView extends AsyncTask<Void, Void, Void> {
 
         // Create a progressdialog
         ProgressDialog mProgressDialog = new ProgressDialog(Results.this);
+        MetarTafInfos mti=new MetarTafInfos();
+        ArrayList<String> metartaf = new ArrayList<String>();
 
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            // Set progressdialog title
             // Set progressdialog message
             mProgressDialog.setMessage(getResources().getString(R.string.loadingResult));
             mProgressDialog.setIndeterminate(false);
@@ -150,6 +132,7 @@ public class Results extends AppCompatActivity {
             // Create an array
             String urlMT="https://www.aviationweather.gov/metar/data?ids="+codeOACI+"&format=decoded&hours=0&taf=on&layout=off";
             String urlI="https://ourairports.com/airports/"+codeOACI+"/";
+            mti.setCode(codeOACI);
 
             try{
                 Document docMT = Jsoup.connect(urlMT).get();//url
@@ -166,8 +149,9 @@ public class Results extends AppCompatActivity {
                         metartaf.add(resultat);
                     }
                 }
+                mti.setMetar(metartaf.get(0));
+                mti.setTaf(metartaf.get(1));
 
-                System.out.println("Infos récups : " + docInfo.select("table[class=small table table-stripped]").text());
                 Elements tbody = docInfo.select("aside[id=data]").select("section").select("table").select("tbody");
                 resultat="";
                 for (Element trs : tbody.select("tr")){
@@ -177,7 +161,7 @@ public class Results extends AppCompatActivity {
                     resultat+="\n\n";
                 }
 
-                metartaf.add(resultat);
+                mti.setInfos(resultat);
 
             }
             catch (IOException e) {
@@ -193,7 +177,7 @@ public class Results extends AppCompatActivity {
         protected void onPostExecute(Void result) {
             // Close the progressdialog
             FragmentManager fm = getSupportFragmentManager();
-            adapter = new FragmentAdapter(fm, getLifecycle(), codeOACI, metartaf);
+            adapter = new FragmentAdapter(fm, getLifecycle(), mti);
             viewSliders.setAdapter(adapter);
 
             layoutMT.addTab(layoutMT.newTab().setText(getResources().getString(R.string.FragNameMetar)));

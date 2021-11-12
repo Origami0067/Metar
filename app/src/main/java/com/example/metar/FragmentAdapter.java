@@ -33,12 +33,12 @@ public class FragmentAdapter extends FragmentStateAdapter {
     ArrayList<String> liste;
 
 
-    public FragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, String code, ArrayList<String> liste) {
+    public FragmentAdapter(@NonNull FragmentManager fragmentManager, @NonNull Lifecycle lifecycle, MetarTafInfos mti) {
         super(fragmentManager, lifecycle);
-        this.code=code;
-        this.metar=liste.get(0);
-        this.taf=liste.get(1);
-        this.info=liste.get(2);
+        this.code=mti.getCode();
+        this.metar= mti.getMetar();
+        this.taf= mti.getTaf();
+        this.info= mti.getInfos();
     }
 
     @NonNull

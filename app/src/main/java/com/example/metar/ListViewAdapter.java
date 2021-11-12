@@ -70,8 +70,6 @@ public class ListViewAdapter extends BaseAdapter {
 
                 String oaci=resultp.get("rank").toString().substring(0,4);
 
-                Toast toast = Toast.makeText(context, oaci, Toast.LENGTH_SHORT);
-                toast.show();
                 Intent resultIntent = new Intent(context, Results.class);
                 // Pass all data rank
                 resultIntent.putExtra("code", oaci);

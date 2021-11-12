@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -58,14 +59,14 @@ public class MapAirports extends FragmentActivity implements OnMapReadyCallback 
         Geocoder geocoder = new Geocoder(MapAirports.this);
         try {
             addressList = geocoder.getFromLocationName(oaci, 1);
+            Address address = addressList.get(0);
+
+            LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+            mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            mMap.addMarker(new MarkerOptions().position(latLng).title(oaci));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
         }catch (Exception e){
             e.printStackTrace();
         }
-        Address address = addressList.get(0);
-
-        LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-        mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-        mMap.addMarker(new MarkerOptions().position(latLng).title(oaci));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 13));
     }
 }
